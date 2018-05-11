@@ -19,26 +19,79 @@
 
 # define W 1024
 # define H 768
-# define WIN pool->win
+# define DEC_W 1024 / 2
+# define DEC_H 768 / 2
+# define X pool->x
+# define Y pool->y
+# define WIN ST_SDL->win
 # define RENDER_FLAG pool->render_flags
-# define RENDER pool->rend
-# define SCREEN_TEX pool->screen_tex
+# define RENDER ST_SDL->rend
 # define TEX_IN SDL_PIXELFORMAT_RGB888, SDL_TEXTUREACCESS_TARGET
 # define WINDOW_IN SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED
 # define KEY_STATE pool->keyboard_state
-# define DONE pool->done
+# define DONE ST_SDL->done
 # define KEY_SCANCODE pool->event.key.keysym.scancode
-# define EVENT_TYPE pool->event.type
+# define EVENT_TYPE pool->sdl->event.type
+# define CREATE_SURF SDL_CreateRGBSurface
+# define ST_SDL pool->sdl
+# define SCREEN_TEX pool->sdl->screen_tex
 
-typedef	struct		s_pool
+typedef	struct		s_eye
+{
+	double			eye_x;
+	double			eye_y;
+	double			eye_z;
+}					t_eye;
+
+typedef	struct		s_viewport
+{
+	double			vp_x;
+	double			vp_y;
+	double			vp_z;
+}					t_viewport;
+
+typedef struct		s_sdl
 {
 	SDL_bool		done;
 	SDL_Window		*win;
-	Uint32			render_flags;
 	SDL_Renderer	*rend;
-	SDL_Texture		*screen_tex;
-	const Uint8		*keyboard_state;
 	SDL_Event		event;
+	SDL_Surface		*scene_surf;
+	SDL_Texture		*scene_tex;
+	SDL_Rect		src_r;
+	SDL_Texture		*screen_tex;
+}					t_sdl;
+
+typedef	struct		s_figure
+{
+	double			fig_x;
+	double			fig_y;
+	double			fig_z;
+	double			radius;
+	int				red;
+	int				green;
+	int				blue;
+}					t_figure;
+
+typedef	struct		s_ray
+{
+	double			ray_x;
+	double			ray_y;
+	double			ray_z;
+}					t_ray;
+
+typedef	struct		s_pool
+{
+	Uint32			render_flags;
+	const Uint8		*keyboard_state;
+	int				*scene;
+	t_eye			*eye;
+	t_viewport		*viewport;
+	t_figure		*figure;
+	t_sdl			*sdl;
+	t_ray			*ray;
+	double			t1;
+	double			t2;
 }					t_pool;
 
 void			initialization(t_pool *pool);
