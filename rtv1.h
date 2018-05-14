@@ -17,10 +17,10 @@
 # include "./libSDL/SDL2.framework/Headers/SDL.h"
 # include "./libSDL/SDL2_image.framework/Headers/SDL_image.h"
 
-# define W 1024
-# define H 768
-# define DEC_W 1024 / 2
-# define DEC_H 768 / 2
+# define W 800
+# define H 800
+# define DEC_W 800 / 2
+# define DEC_H 800 / 2
 # define X pool->x
 # define Y pool->y
 # define WIN ST_SDL->win
@@ -35,6 +35,8 @@
 # define CREATE_SURF SDL_CreateRGBSurface
 # define ST_SDL pool->sdl
 # define SCREEN_TEX pool->sdl->screen_tex
+# define TEX_FMR_SRF SDL_CreateTextureFromSurface
+# define REND_CPY SDL_RenderCopy
 
 typedef	struct		s_eye
 {
@@ -60,6 +62,7 @@ typedef struct		s_sdl
 	SDL_Texture		*scene_tex;
 	SDL_Rect		src_r;
 	SDL_Texture		*screen_tex;
+	int				*scene;
 }					t_sdl;
 
 typedef	struct		s_figure
@@ -84,7 +87,6 @@ typedef	struct		s_pool
 {
 	Uint32			render_flags;
 	const Uint8		*keyboard_state;
-	int				*scene;
 	t_eye			*eye;
 	t_viewport		*viewport;
 	t_figure		*figure;
