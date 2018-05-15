@@ -19,7 +19,7 @@ static	void	part_one(t_pool *pool)
 		ft_putstr("\033[1;31mError initializing SDL\n\e[m");
 		exit(1);
 	}
-	WIN = SDL_CreateWindow("Wolf3d", WINDOW_IN, W, H, 0);
+	WIN = SDL_CreateWindow("RtV1", WINDOW_IN, W, H, 0);
 	if (!WIN)
 	{
 		ft_putstr("\033[1;31mError creating window\n\e[m");

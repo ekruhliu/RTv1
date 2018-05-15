@@ -58,8 +58,6 @@ typedef struct		s_sdl
 	SDL_Window		*win;
 	SDL_Renderer	*rend;
 	SDL_Event		event;
-	SDL_Surface		*scene_surf;
-	SDL_Texture		*scene_tex;
 	SDL_Rect		src_r;
 	SDL_Texture		*screen_tex;
 	int				*scene;

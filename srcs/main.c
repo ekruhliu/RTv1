@@ -21,8 +21,6 @@ static	void	init_struct(t_pool *pool)
 	pool->eye->eye_x = 0;
 	pool->eye->eye_y = 0;
 	pool->eye->eye_z = -20;
-	ST_SDL->scene_surf = CREATE_SURF(0, H, W, 32, 0, 0, 0, 0);
-	ST_SDL->scene = ST_SDL->scene_surf->pixels;
 	pool->sdl->src_r.x = 0;
 	pool->sdl->src_r.y = 0;
 	pool->sdl->src_r.w = 800;
@@ -34,10 +32,10 @@ static	void	init_struct(t_pool *pool)
 
 static	void	init_figure(t_pool *pool)
 {
-	pool->figure->fig_x = 5;
-	pool->figure->fig_y = 5;
-	pool->figure->fig_z = 1;
-	pool->figure->radius = 1;
+	pool->figure->fig_x = 0;
+	pool->figure->fig_y = 0;
+	pool->figure->fig_z = 0;
+	pool->figure->radius = 3;
 	pool->figure->red = 255;
 	pool->figure->green = 0;
 	pool->figure->blue = 0;
@@ -86,28 +84,15 @@ static	int	render_figure(t_pool *pool)
 	}
 	if (shit == -1)
 		return (0);
-	return (pool->figure->red);
+	return ((pool->figure->red << 16) + (pool->figure->green << 8) + (pool->figure->blue));
 } 
 
-// static	void	create_figure(t_pool *pool)
-// {
-// 	int x;
-// 	int y;
-
-// 	y = 0;
-// 	while (y < H)
-// 	{
-// 		x = 0;
-// 		while (x < W)
-// 		{
-// 			pool->ray->ray_x = x * pool->viewport->vp_x / DEC_W;
-// 			pool->ray->ray_y = y * pool->viewport->vp_y / DEC_H;
-// 			pool->ray->ray_z = 1;
-// 			x++;
-// 		}
-// 		y++;
-// 	}
-// }
+static	void	create_figure(t_pool *pool, int x, int y)
+{
+	pool->ray->ray_x = x * pool->viewport->vp_x / W;
+	pool->ray->ray_y = y * pool->viewport->vp_y / H;
+	pool->ray->ray_z = 1;
+}
 
 int				main(int argc, char **argv)
 {
@@ -127,30 +112,26 @@ int				main(int argc, char **argv)
 
 		y = 0;
 		i = 0;
+		ST_SDL->scene = malloc(sizeof(int) * (W * H));
 		while (!DONE)
 		{
-			// create_figure(pool);
 			while (y < H)
 			{
 				x = 0;
 				while (x < W)
 				{
-					pool->ray->ray_x = x * pool->viewport->vp_x / DEC_W;
-					pool->ray->ray_y = y * pool->viewport->vp_y / DEC_H;
-					pool->ray->ray_z = 1;
-					// SDL_SetRenderDrawColor(ST_SDL->rend, render_figure(pool), 0, 0, SDL_ALPHA_OPAQUE);
-					// SDL_RenderDrawPoint(ST_SDL->rend, x, y);
+					create_figure(pool, x - DEC_W, DEC_H - y);
 					ST_SDL->scene[i] = render_figure(pool);
 					x++;
 					i++;
 				}
 				y++;
 			}
-			ST_SDL->scene_tex = TEX_FMR_SRF(RENDER, ST_SDL->scene_surf);
-			SDL_FreeSurface(ST_SDL->scene_surf);
-			REND_CPY(RENDER, ST_SDL->scene_tex, NULL, &ST_SDL->src_r);
-			SDL_DestroyTexture(ST_SDL->scene_tex);
+			SDL_UpdateTexture(SCREEN_TEX, NULL, ST_SDL->scene, W * 4);
+			SDL_SetRenderDrawColor(ST_SDL->rend, 0, 0, 0, SDL_ALPHA_OPAQUE);
+			REND_CPY(RENDER, SCREEN_TEX, NULL, NULL);
 			SDL_RenderPresent(ST_SDL->rend);
+			SDL_RenderClear(ST_SDL->rend);
 			KEY_STATE = SDL_GetKeyboardState(NULL);
 			SDL_PollEvent(&ST_SDL->event);
 			(KEY_STATE[SDL_SCANCODE_ESCAPE]) ? DONE = SDL_TRUE : (0);
@@ -159,8 +140,7 @@ int				main(int argc, char **argv)
 		SDL_RenderClear(ST_SDL->rend);
 		SDL_DestroyWindow(WIN);
 		SDL_DestroyRenderer(ST_SDL->rend);
-		SDL_FreeSurface(ST_SDL->scene_surf);
-		SDL_DestroyTexture(ST_SDL->scene_tex);
+		SDL_DestroyTexture(SCREEN_TEX);
 		SDL_Quit();
 		free(pool->sdl);
 		free(pool->eye);
