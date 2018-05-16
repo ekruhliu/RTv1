@@ -19,7 +19,7 @@ static	void	part_one(t_pool *pool)
 		ft_putstr("\033[1;31mError initializing SDL\n\e[m");
 		exit(1);
 	}
-	WIN = SDL_CreateWindow("RtV1", WINDOW_IN, W, H, 0);
+	WIN = SDL_CreateWindow("RTv1", WINDOW_IN, W, H, 0);
 	if (!WIN)
 	{
 		ft_putstr("\033[1;31mError creating window\n\e[m");
@@ -28,7 +28,7 @@ static	void	part_one(t_pool *pool)
 	}
 }
 
-static void		part_two(t_pool *pool)
+static	void	part_two(t_pool *pool)
 {
 	RENDER_FLAG = SDL_RENDERER_ACCELERATED;
 	RENDER = SDL_CreateRenderer(WIN, -1, RENDER_FLAG);
@@ -50,8 +50,30 @@ static void		part_two(t_pool *pool)
 	}
 }
 
+static	void	part_three(t_pool *pool)
+{
+	pool->eye = malloc(sizeof(t_eye));
+	pool->viewport = malloc(sizeof(t_eye));
+	pool->figure = malloc(sizeof(t_figure));
+	pool->ray = malloc(sizeof(t_figure));
+	pool->light = malloc(sizeof(t_light));
+	pool->eye->eye_x = 0;
+	pool->eye->eye_y = 0;
+	pool->eye->eye_z = -20;
+	pool->sdl->src_r.x = 0;
+	pool->sdl->src_r.y = 0;
+	pool->sdl->src_r.w = 800;
+	pool->sdl->src_r.h = 800;
+	pool->viewport->vp_x = 1;
+	pool->viewport->vp_y = 1; // 0 for tube
+	pool->viewport->vp_z = 1;
+	pool->t1 = 0;
+	pool->t2 = 0;
+}
+
 void			initialization(t_pool *pool)
 {
 	part_one(pool);
 	part_two(pool);
+	part_three(pool);
 }

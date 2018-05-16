@@ -20,7 +20,7 @@ HEADER = ./rtv1.h
 
 LIBFT = libft/libft.a
 
-SRCS = ./srcs/initialization.c ./srcs/main.c
+SRCS = ./srcs/initialization.c ./srcs/cleaner.c ./srcs/render.c ./srcs/main.c
 
 OBJ = $(SRCS:.c=.o)
 

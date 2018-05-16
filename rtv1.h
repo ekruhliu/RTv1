@@ -17,10 +17,10 @@
 # include "./libSDL/SDL2.framework/Headers/SDL.h"
 # include "./libSDL/SDL2_image.framework/Headers/SDL_image.h"
 
-# define W 800
-# define H 800
-# define DEC_W 800 / 2
-# define DEC_H 800 / 2
+# define W 1000
+# define H 1000
+# define DEC_W 1000 / 2
+# define DEC_H 1000 / 2
 # define X pool->x
 # define Y pool->y
 # define WIN ST_SDL->win
@@ -37,6 +37,25 @@
 # define SCREEN_TEX pool->sdl->screen_tex
 # define TEX_FMR_SRF SDL_CreateTextureFromSurface
 # define REND_CPY SDL_RenderCopy
+# define SQR_RAY_X pool->ray->ray_x * pool->ray->ray_x
+# define SQR_RAY_Y pool->ray->ray_y * pool->ray->ray_y
+# define SQR_RAY_Z pool->ray->ray_z * pool->ray->ray_z
+# define X4 (pool->eye->eye_x - pool->figure->fig_x) * pool->ray->ray_x
+# define X5 (pool->eye->eye_y - pool->figure->fig_y) * pool->ray->ray_y
+# define X6 (pool->eye->eye_z - pool->figure->fig_z) * pool->ray->ray_z
+# define KYSOK pool->figure->radius * pool->figure->radius
+# define SHMATOK_1 (pool->eye->eye_x - pool->figure->fig_x)
+# define SHMATOK_2 (pool->eye->eye_y - pool->figure->fig_y)
+# define SHMATOK_3 (pool->eye->eye_z - pool->figure->fig_z)
+# define X7 (SHMATOK_1 * SHMATOK_1 - KYSOK)
+# define X8 (SHMATOK_2 * SHMATOK_2 - KYSOK)
+# define X9 (SHMATOK_3 * SHMATOK_3 - KYSOK)
+# define BIT_RED (pool->figure->red << 16)
+# define BIT_GREEN (pool->figure->green << 8)
+# define BIT_BLUE (pool->figure->blue)
+# define X10 pool->normal_x * pool->l_x;
+# define X11 pool->normal_y * pool->l_y;
+# define X12 pool->normal_z * pool->l_z;
 
 typedef	struct		s_eye
 {
@@ -72,6 +91,7 @@ typedef	struct		s_figure
 	int				red;
 	int				green;
 	int				blue;
+	int				color;
 }					t_figure;
 
 typedef	struct		s_ray
@@ -80,6 +100,19 @@ typedef	struct		s_ray
 	double			ray_y;
 	double			ray_z;
 }					t_ray;
+
+typedef struct		s_light
+{
+	double			intensity_amb;
+	double			intensity_dir;
+	double			intensity;
+	double			dir_x;
+	double			dir_y;
+	double			dir_z;
+	double			pos_x;
+	double			pos_y;
+	double			pos_z;
+}					t_light;
 
 typedef	struct		s_pool
 {
@@ -90,10 +123,29 @@ typedef	struct		s_pool
 	t_figure		*figure;
 	t_sdl			*sdl;
 	t_ray			*ray;
+	t_light			*light;
+	double			infin;
 	double			t1;
 	double			t2;
+	double			p_x;
+	double			p_y;
+	double			p_z;
+	double			l_x;
+	double			l_y;
+	double			l_z;
+	double			r_x;
+	double			r_y;
+	double			r_z;
+	double			v_x;
+	double			v_y;
+	double			v_z;
+	double			normal_x;
+	double			normal_y;
+	double			normal_z;
 }					t_pool;
 
-void			initialization(t_pool *pool);
+void				initialization(t_pool *pool);
+void				cleaner(t_pool *pool);
+int					render(t_pool *pool);
 
 #endif
