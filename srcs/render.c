@@ -141,57 +141,5 @@ int	render(t_pool *pool)
 	else
 		b = pool->figure->blue * pool->light_int;
 	pool->figure->color = (r << 16) + (g << 8) + b;
-	// double	k1;
-	// double	k2;
-	// double	k3;
-	// double	disk;
-	// int		shit;
-
-	// shit = -1;
-	// k1 = SQR_RAY_X + SQR_RAY_Y + SQR_RAY_Z;
-	// k2 = 2 * (X4 + X5 + X6);
-	// k3 = X7 + X8 + X9;
-	// disk = k2 * k2 - 4 * k1 * k3;
-	// if (disk < 0)
-	// {
-	// 	pool->t1 = INFINITY;
-	// 	pool->t2 = INFINITY;
-	// }
-	// pool->t1 = (-k2 + sqrt(disk)) / (2 * k1);
-	// pool->t2 = (-k2 - sqrt(disk)) / (2 * k1);
-	// if (pool->t1 > 1 && pool->t1 < INFINITY)
-	// {
-	// 	pool->t1 = INFINITY;
-	// 	shit = 1;
-	// }
-	// if (pool->t2 > 1 && pool->t2 < INFINITY)
-	// {
-	// 	pool->t2 = INFINITY;
-	// 	shit = 1;
-	// }
-	// if (shit == -1)
-	// 	return (0);
-	// shmatok(pool, shit);
-	// shmatok_2(pool);
-	// create_light(pool);
-
-	// unsigned int r;
-	// unsigned int g;
-	// unsigned int b;
-
-	// if ((pool->figure->red * pool->light_int) > 255)
-	// 	r = 255;
-	// else
-	// 	r = pool->figure->red * pool->light_int;
-	// if ((pool->figure->green * pool->light_int) > 255)
-	// 	g = 255;
-	// else
-	// 	g = pool->figure->green * pool->light_int;
-	// if ((pool->figure->blue * pool->light_int) > 255)
-	// 	b = 255;
-	// else
-	// 	b = pool->figure->blue * pool->light_int;
-	// pool->figure->color = (r << 16) + (g << 8) + b;
-	// // pool->figure->color = BIT_RED + BIT_GREEN + BIT_BLUE;
 	return (pool->figure->color);
 }
