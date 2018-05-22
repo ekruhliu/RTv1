@@ -50,7 +50,7 @@ static	void	part_two(t_pool *pool)
 	}
 }
 
-static	void	part_three(t_pool *pool)
+static	void	part_three(t_pool *pool, char *argv)
 {
 	pool->eye = malloc(sizeof(t_eye));
 	pool->viewport = malloc(sizeof(t_eye));
@@ -65,15 +65,16 @@ static	void	part_three(t_pool *pool)
 	pool->sdl->src_r.w = 800;
 	pool->sdl->src_r.h = 800;
 	pool->viewport->vp_x = 1;
-	pool->viewport->vp_y = 1; // 0 for tube
+	(ft_atoi(argv) == 1 ? pool->viewport->vp_y = 1 : 0);
+	(ft_atoi(argv) == 2 ? pool->viewport->vp_y = 0 : 0);
 	pool->viewport->vp_z = 1;
 	pool->t1 = 0;
 	pool->t2 = 0;
 }
 
-void			initialization(t_pool *pool)
+void			initialization(t_pool *pool, char *argv)
 {
 	part_one(pool);
 	part_two(pool);
-	part_three(pool);
+	part_three(pool, argv);
 }

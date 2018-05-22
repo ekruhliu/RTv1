@@ -12,29 +12,36 @@
 
 #include "../rtv1.h"
 
-static	void	init_sphere(t_pool *pool)
+static	void	init_sphere(t_pool *pool, char *argv)
 {
 	pool->figure->fig_x = 0;
 	pool->figure->fig_y = 0;
 	pool->figure->fig_z = 0;
-	pool->figure->radius = 2.5; // 1.5 for tube
-	pool->figure->red = 255;
+	(ft_atoi(argv) == 1 ? pool->figure->radius = 2.5 : 0);
+	(ft_atoi(argv) == 2 ? pool->figure->radius = 1.5 : 0);
+	pool->figure->red = 0;
 	pool->figure->green = 0;
 	pool->figure->blue = 0;
-	// pool->infinity = INFINITY;
-	pool->light->intensity_amb = 0.5;
-	pool->light->intensity = 0.0;
-	pool->light->pos_x = 1;
-	pool->light->pos_y = 1;
+	(ft_atoi(argv) == 1 ? pool->figure->red = 255 : 0);
+	(ft_atoi(argv) == 2 ? pool->figure->green = 255 : 0);
+	pool->figure->shit = 500;
+	pool->light->intensity_amb = 0.2;
+	pool->light->intensity = 0.5;
+	pool->light->pos_x = 0;
+	pool->light->pos_y = 5;
 	pool->light->pos_z = 0;
+	pool->light->intensity_dir = 0.1;
+	pool->light->dir_x = 0;
+	pool->light->dir_y = -1;
+	pool->light->dir_z = -1;
 }
 
-static	void	part_one(t_pool *pool)
+static	void	part_one(t_pool *pool, char *argv)
 {
 	ST_SDL = malloc(sizeof(t_sdl));
 	DONE = SDL_FALSE;
-	initialization(pool);
-	init_sphere(pool);
+	initialization(pool, argv);
+	init_sphere(pool, argv);
 	ST_SDL->scene = malloc(sizeof(int) * (W * H));
 }
 
@@ -82,7 +89,7 @@ int				main(int argc, char **argv)
 	if (argc == 2 && argv[1])
 	{
 		pool = malloc(sizeof(t_pool));
-		part_one(pool);
+		part_one(pool, argv[1]);
 		while (!DONE)
 		{
 			part_two(pool);
