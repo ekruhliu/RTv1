@@ -39,25 +39,49 @@ static	void	find_r(t_pool *pool)
 	pool->r_z = 2 * pool->normal_z * x - pool->l_z;
 }
 
-static	void	create_light(t_pool *pool)
+static	void	amb_light(t_pool *pool)
+{
+	if (pool->light->intensity_amb > 0.0)
+		pool->light_int += pool->light->intensity_amb;
+}
+
+static	void	point_light(t_pool *pool)
 {
 	double scal;
-	int h = 0;
 	double scal_2;
 	double max = INFINITY;
 
-	pool->light_int = 0.0;
-	if (pool->light->intensity_amb > 0.0)
-		pool->light_int += pool->light->intensity_amb;
 	if (pool->light->intensity > 0.0)
 	{
 		pool->l_x = pool->light->pos_x - pool->p_x;
 		pool->l_y = pool->light->pos_y - pool->p_y;
 		pool->l_z = pool->light->pos_z - pool->p_z;
 		max = 1;
-		h = 1;
 	}
-	if (pool->light->intensity_dir > 0.0 && h == 1)
+	scal = X10 + X11 + X12;
+	if (scal > 0)
+		pool->light_int += pool->light->intensity * scal / (sqrt(pow(pool->normal_x, 2) + pow(pool->normal_y, 2) + pow(pool->normal_z, 2))) * (sqrt(pow(pool->l_x, 2) + pow(pool->l_y, 2) + pow(pool->l_z, 2)));
+	if (pool->figure->shit != -1)
+	{
+		find_r(pool);
+		pool->v_x = pool->ray->ray_x;
+		pool->v_y = pool->ray->ray_y;
+		pool->v_z = pool->ray->ray_z;
+		pool->v_x *= -1;
+		pool->v_y *= -1;
+		pool->v_z *= -1;
+		scal_2 = X13 + X14 + X15;
+		if (scal_2 > 0)
+			pool->light_int += pool->light->intensity * pow(scal_2 / (sqrt(pow(pool->r_x, 2) + pow(pool->r_y, 2) + pow(pool->r_z, 2))) * (sqrt(pow(pool->v_x, 2) + pow(pool->v_y, 2) + pow(pool->v_z, 2))), pool->figure->shit);
+	}
+}
+
+static	void	dir_light(t_pool *pool)
+{
+	double scal;
+	double scal_2;
+
+	if (pool->light->intensity_dir > 0.0)
 	{
 		pool->l_x = pool->light->dir_x;
 		pool->l_y = pool->light->dir_y;
@@ -79,6 +103,17 @@ static	void	create_light(t_pool *pool)
 		if (scal_2 > 0)
 			pool->light_int += pool->light->intensity * pow(scal_2 / (sqrt(pow(pool->r_x, 2) + pow(pool->r_y, 2) + pow(pool->r_z, 2))) * (sqrt(pow(pool->v_x, 2) + pow(pool->v_y, 2) + pow(pool->v_z, 2))), pool->figure->shit);
 	}
+}
+
+static	void	create_light(t_pool *pool)
+{
+	double scal;
+	double scal_2;
+
+	pool->light_int = 0.0;
+	amb_light(pool);
+	point_light(pool);
+	dir_light(pool);
 }
 
 int	render(t_pool *pool)

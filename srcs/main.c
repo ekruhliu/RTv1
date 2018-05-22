@@ -33,7 +33,7 @@ static	void	init_sphere(t_pool *pool, char *argv)
 	pool->light->intensity_dir = 0.1;
 	pool->light->dir_x = 0;
 	pool->light->dir_y = -1;
-	pool->light->dir_z = -1;
+	pool->light->dir_z = 0;
 }
 
 static	void	part_one(t_pool *pool, char *argv)

@@ -43,10 +43,6 @@
 # define X4 pool->x * pool->ray->ray_x
 # define X5 pool->y * pool->ray->ray_y
 # define X6 pool->z * pool->ray->ray_z
-// # define KYSOK pool->figure->radius * pool->figure->radius
-// # define SHMATOK_1 (pool->eye->eye_x - pool->figure->fig_x)
-// # define SHMATOK_2 (pool->eye->eye_y - pool->figure->fig_y)
-// # define SHMATOK_3 (pool->eye->eye_z - pool->figure->fig_z)
 # define X7 pool->x * pool->x
 # define X8 pool->y * pool->y
 # define X9 pool->z * pool->z
