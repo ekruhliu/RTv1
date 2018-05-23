@@ -22,7 +22,7 @@ void	cleaner(t_pool *pool)
 	free(pool->sdl);
 	free(pool->eye);
 	free(pool->viewport);
-	free(pool->figure);
+	free(pool->sphere);
 	free(pool->ray);
 	free(pool);
 }

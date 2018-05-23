@@ -12,27 +12,31 @@
 
 #include "../rtv1.h"
 
-static	void	init_sphere(t_pool *pool, char *argv)
+static	void	init_sphere(t_pool *pool)
 {
-	pool->figure->fig_x = 0;
-	pool->figure->fig_y = 0;
-	pool->figure->fig_z = 0;
-	(ft_atoi(argv) == 1 ? pool->figure->radius = 2.5 : 0);
-	(ft_atoi(argv) == 2 ? pool->figure->radius = 1.5 : 0);
-	pool->figure->red = 0;
-	pool->figure->green = 0;
-	pool->figure->blue = 0;
-	(ft_atoi(argv) == 1 ? pool->figure->red = 255 : 0);
-	(ft_atoi(argv) == 2 ? pool->figure->green = 255 : 0);
-	pool->figure->shit = 500;
-	pool->light->intensity_amb = 0.2;
-	pool->light->intensity = 0.5;
-	pool->light->pos_x = 0;
-	pool->light->pos_y = 5;
+	pool->sphere->fig_x = 0;
+	pool->sphere->fig_y = 0;
+	pool->sphere->fig_z = 0;
+	pool->sphere->radius = 2.5;
+	// (ft_atoi(argv) == 2 ? pool->sphere->radius = 1.5 : 0);
+	pool->sphere->red = 0;
+	pool->sphere->green = 0;
+	pool->sphere->blue = 0;
+	pool->sphere->red = 255;
+	// (ft_atoi(argv) == 2 ? pool->sphere->green = 255 : 0);
+	pool->sphere->tarnish = 1000000;
+}
+
+static	void	init_light(t_pool *pool)
+{
+	pool->light->intensity_amb = 0.4;
+	pool->light->intensity = 0.8;
+	pool->light->pos_x = 3;
+	pool->light->pos_y = 0;
 	pool->light->pos_z = 0;
-	pool->light->intensity_dir = 0.1;
-	pool->light->dir_x = 0;
-	pool->light->dir_y = -1;
+	pool->light->intensity_dir = 0.2;
+	pool->light->dir_x = -1;
+	pool->light->dir_y = 0;
 	pool->light->dir_z = 0;
 }
 
@@ -41,7 +45,8 @@ static	void	part_one(t_pool *pool, char *argv)
 	ST_SDL = malloc(sizeof(t_sdl));
 	DONE = SDL_FALSE;
 	initialization(pool, argv);
-	init_sphere(pool, argv);
+	init_sphere(pool);
+	init_light(pool);
 	ST_SDL->scene = malloc(sizeof(int) * (W * H));
 }
 

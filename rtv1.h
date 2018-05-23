@@ -55,6 +55,21 @@
 # define X13 pool->r_x * pool->v_x
 # define X14 pool->r_y * pool->v_y
 # define X15 pool->r_z * pool->v_z
+# define X16 pool->l_x * pool->l_x
+# define X17 pool->l_y * pool->l_y
+# define X18 pool->l_z * pool->l_y
+# define X19 pool->x * pool->l_x
+# define X20 pool->y * pool->l_y
+# define X21 pool->z * pool->l_z
+# define X22 pool->x * pool->x
+# define X23 pool->y * pool->y
+# define X24 pool->z * pool->z
+# define X25
+# define X26
+# define X27
+# define X28
+# define X29
+# define X30
 
 typedef	struct		s_eye
 {
@@ -81,7 +96,7 @@ typedef struct		s_sdl
 	int				*scene;
 }					t_sdl;
 
-typedef	struct		s_figure
+typedef	struct		s_sphere
 {
 	double			fig_x;
 	double			fig_y;
@@ -91,8 +106,13 @@ typedef	struct		s_figure
 	int				green;
 	int				blue;
 	int				color;
-	int				shit;
-}					t_figure;
+	int				tarnish;
+}					t_sphere;
+
+typedef	struct		s_tube
+{
+
+}					t_tube;
 
 typedef	struct		s_ray
 {
@@ -120,17 +140,21 @@ typedef	struct		s_pool
 	const Uint8		*keyboard_state;
 	t_eye			*eye;
 	t_viewport		*viewport;
-	t_figure		*figure;
+	t_sphere		*sphere;
 	t_sdl			*sdl;
 	t_ray			*ray;
 	t_light			*light;
+	t_tube			*tube;
 	double			closest_t;
+	double			shadow_t;
 	double			x;
 	double			y;
 	double			z;
 	double			light_int;
 	double			t1;
 	double			t2;
+	double			sdw_t1;
+	double			sdw_t2;
 	double			p_x;
 	double			p_y;
 	double			p_z;

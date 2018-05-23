@@ -54,8 +54,11 @@ static	void	part_three(t_pool *pool, char *argv)
 {
 	pool->eye = malloc(sizeof(t_eye));
 	pool->viewport = malloc(sizeof(t_eye));
-	pool->figure = malloc(sizeof(t_figure));
-	pool->ray = malloc(sizeof(t_figure));
+	(ft_atoi(argv) == 1 ? pool->sphere = malloc(sizeof(t_sphere)) : 0);
+	(ft_atoi(argv) == 2 ? pool->tube = malloc(sizeof(t_tube)) : 0);
+	// pool->sphere = malloc(sizeof(t_figure));
+	// pool->tube = malloc(sizeof(t_tube));
+	pool->ray = malloc(sizeof(t_ray));
 	pool->light = malloc(sizeof(t_light));
 	pool->eye->eye_x = 0;
 	pool->eye->eye_y = 0;
@@ -65,8 +68,9 @@ static	void	part_three(t_pool *pool, char *argv)
 	pool->sdl->src_r.w = 800;
 	pool->sdl->src_r.h = 800;
 	pool->viewport->vp_x = 1;
-	(ft_atoi(argv) == 1 ? pool->viewport->vp_y = 1 : 0);
-	(ft_atoi(argv) == 2 ? pool->viewport->vp_y = 0 : 0);
+	pool->viewport->vp_y = 1;
+	// (ft_atoi(argv) == 1 ? pool->viewport->vp_y = 1 : 0);
+	// (ft_atoi(argv) == 2 ? pool->viewport->vp_y = 0 : 0);
 	pool->viewport->vp_z = 1;
 	pool->t1 = 0;
 	pool->t2 = 0;
