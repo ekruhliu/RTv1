@@ -12,51 +12,26 @@
 
 #include "../rtv1.h"
 
-static	void	init_sphere(t_pool *pool)
-{
-	pool->figure->fig_x = 0;
-	pool->figure->fig_y = 0;
-	pool->figure->fig_z = 0;
-	pool->figure->dir_x = 0;
-	pool->figure->dir_y = 0;
-	pool->figure->dir_z = 0;
-	pool->figure->radius = 2.5;
-	pool->figure->red = 0;
-	pool->figure->green = 0;
-	pool->figure->blue = 0;
-	pool->figure->red = 255;
-	pool->figure->tarnish = 1000;
-	pool->figure->num = 1;
-}
-
-static	void	init_tube(t_pool *pool)
-{
-	pool->figure->fig_x = 0;
-	pool->figure->fig_y = 0;
-	pool->figure->fig_z = 0;
-	pool->figure->dir_x = 0;
-	pool->figure->dir_y = 1;
-	pool->figure->dir_z = 0;
-	pool->figure->radius = 1.5;
-	pool->figure->red = 0;
-	pool->figure->green = 255;
-	pool->figure->blue = 0;
-	pool->figure->red = 0;
-	pool->figure->tarnish = 1000;
-	pool->figure->num = 2;
-}
-
 static	void	init_light(t_pool *pool)
 {
-	pool->light->intensity_amb = 0.4;
-	pool->light->intensity = 0.8;
-	pool->light->pos_x = 3;
-	pool->light->pos_y = 0;
-	pool->light->pos_z = 0;
-	pool->light->intensity_dir = 0.2;
-	pool->light->dir_x = -1;
-	pool->light->dir_y = 0;
-	pool->light->dir_z = 0;
+	pool->light = malloc(sizeof(t_light) * 1);
+	pool->light[0].intensity_amb = 0.2;
+	pool->light[0].intensity = 0.6;
+	pool->light[0].pos.x = 10;
+	pool->light[0].pos.y = 1;
+	pool->light[0].pos.z = -8;
+	// pool->light[0].dir.x = 1;
+	// pool->light[0].dir.y = 0;
+	// pool->light[0].dir.z = 0;
+
+	// pool->light[1].intensity = 0.4;
+	// pool->light[1].pos.x = 3;
+	// pool->light[1].pos.y = 0;
+	// pool->light[1].pos.z = -4;
+	// pool->light[1].dir.x = -1;
+	// pool->light[1].dir.y = 0;
+	// pool->light[1].dir.z = 0;
+	pool->light->counter = 1;
 }
 
 static	void	part_one(t_pool *pool, char *argv)
@@ -65,9 +40,21 @@ static	void	part_one(t_pool *pool, char *argv)
 	DONE = SDL_FALSE;
 	initialization(pool);
 	if (ft_atoi(argv) == 1)
-		init_sphere(pool);
+		scene_one(pool);
 	if (ft_atoi(argv) == 2)
-		init_tube(pool);
+		scene_two(pool);
+	// if (ft_atoi(argv) == 3)
+	// {
+	// 	pool->figure = malloc(sizeof(t_figure) * 4);
+	// }
+	// if (ft_atoi(argv) == 4)
+	// {
+	// 	pool->figure = malloc(sizeof(t_figure) * 6);
+	// }
+	// if (ft_atoi(argv) == 5)
+	// {
+	// 	pool->figure = malloc(sizeof(t_figure) * 16);
+	// }
 	init_light(pool);
 	ST_SDL->scene = malloc(sizeof(int) * (W * H));
 }
@@ -85,9 +72,9 @@ static	void	part_two(t_pool *pool)
 		x = 0;
 		while (x < W)
 		{
-			pool->ray->ray_x = (x - DEC_W) * pool->viewport->vp_x / W;
-			pool->ray->ray_y = (DEC_H - y) * pool->viewport->vp_y / H;
-			pool->ray->ray_z = 1;
+			pool->ray.x = (x - DEC_W) * pool->viewport.x / W;
+			pool->ray.y = (DEC_H - y) * pool->viewport.y / H;
+			pool->ray.z = 1;
 			ST_SDL->scene[i] = render(pool);
 			x++;
 			i++;

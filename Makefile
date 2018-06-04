@@ -20,7 +20,8 @@ HEADER = ./rtv1.h
 
 LIBFT = libft/libft.a
 
-SRCS = ./srcs/initialization.c ./srcs/cleaner.c ./srcs/render.c ./srcs/main.c
+SRCS = ./scenes/scene_one.c ./scenes/scene_two.c ./scenes/scene_three.c ./scenes/scene_four.c ./scenes/scene_five.c ./srcs/initialization.c ./srcs/cleaner.c ./srcs/render.c \
+./srcs/shadows.c ./srcs/lights.c ./srcs/intersect_ray_figures.c ./srcs/colors.c ./srcs/main.c
 
 OBJ = $(SRCS:.c=.o)
 

@@ -37,53 +37,48 @@
 # define SCREEN_TEX pool->sdl->screen_tex
 # define TEX_FMR_SRF SDL_CreateTextureFromSurface
 # define REND_CPY SDL_RenderCopy
-# define X1 pool->ray->ray_x * pool->ray->ray_x
-# define X2 pool->ray->ray_y * pool->ray->ray_y
-# define X3 pool->ray->ray_z * pool->ray->ray_z
-# define X4 pool->x * pool->ray->ray_x
-# define X5 pool->y * pool->ray->ray_y
-# define X6 pool->z * pool->ray->ray_z
-# define X7 pool->x * pool->x
-# define X8 pool->y * pool->y
-# define X9 pool->z * pool->z
-# define BIT_RED (pool->figure->red << 16)
-# define BIT_GREEN (pool->figure->green << 8)
-# define BIT_BLUE (pool->figure->blue)
-# define X10 pool->normal_x * pool->l_x
-# define X11 pool->normal_y * pool->l_y
-# define X12 pool->normal_z * pool->l_z
-# define X13 pool->r_x * pool->v_x
-# define X14 pool->r_y * pool->v_y
-# define X15 pool->r_z * pool->v_z
-# define X16 pool->l_x * pool->l_x
-# define X17 pool->l_y * pool->l_y
-# define X18 pool->l_z * pool->l_y
-# define X19 pool->x * pool->l_x
-# define X20 pool->y * pool->l_y
-# define X21 pool->z * pool->l_z
-# define X22 pool->x * pool->x
-# define X23 pool->y * pool->y
-# define X24 pool->z * pool->z
-# define X25
-# define X26
-# define X27
-# define X28
-# define X29
-# define X30
+# define RADIUS pool->figure[i].radius
+# define DOT(x_1, x_2) ((x_1.x * x_2.x) + (x_1.y * x_2.y) + (x_1.z * x_2.z))
+# define X1 (sqrt(pow(pool->normal.x, 2) + pow(pool->normal.y, 2) + pow(pool->normal.z, 2)))
+# define X2 (sqrt(pow(pool->l.x, 2) + pow(pool->l.y, 2) + pow(pool->l.z, 2)))
+# define X3 (sqrt(pow(pool->r.x, 2) + pow(pool->r.y, 2) + pow(pool->r.z, 2)))
+# define X4 (sqrt(pow(pool->v.x, 2) + pow(pool->v.y, 2) + pow(pool->v.z, 2)))
+// # define X5 pool->y * pool->ray->ray_y
+// # define X6 pool->z * pool->ray->ray_z
+// # define X7 pool->x * pool->x
+// # define X8 pool->y * pool->y
+// # define X9 pool->z * pool->z
+// # define BIT_RED (pool->figure->red << 16)
+// # define BIT_GREEN (pool->figure->green << 8)
+// # define BIT_BLUE (pool->figure->blue)
+// # define X10 pool->normal_x * pool->l_x
+// # define X11 pool->normal_y * pool->l_y
+// # define X12 pool->normal_z * pool->l_z
+// # define X13 pool->r_x * pool->v_x
+// # define X14 pool->r_y * pool->v_y
+// # define X15 pool->r_z * pool->v_z
+// # define X16 pool->l_x * pool->l_x
+// # define X17 pool->l_y * pool->l_y
+// # define X18 pool->l_z * pool->l_y
+// # define X19 pool->x * pool->l_x
+// # define X20 pool->y * pool->l_y
+// # define X21 pool->z * pool->l_z
+// # define X22 pool->x * pool->x
+// # define X23 pool->y * pool->y
+// # define X24 pool->z * pool->z
+// # define X25
+// # define X26
+// # define X27
+// # define X28
+// # define X29
+// # define X30
 
-typedef	struct		s_eye
+typedef	struct		s_vector
 {
-	double			eye_x;
-	double			eye_y;
-	double			eye_z;
-}					t_eye;
-
-typedef	struct		s_viewport
-{
-	double			vp_x;
-	double			vp_y;
-	double			vp_z;
-}					t_viewport;
+	double			x;
+	double			y;
+	double			z;
+}					t_vector;
 
 typedef struct		s_sdl
 {
@@ -96,97 +91,68 @@ typedef struct		s_sdl
 	int				*scene;
 }					t_sdl;
 
-// typedef	struct		s_sphere
-// {
-// 	double			fig_x;
-// 	double			fig_y;
-// 	double			fig_z;
-// 	double			radius;
-// 	int				red;
-// 	int				green;
-// 	int				blue;
-// 	int				color;
-// 	int				tarnish;
-// 	int				num;
-// }					t_sphere;
-
 typedef	struct		s_figure
 {
-	double			fig_x;
-	double			fig_y;
-	double			fig_z;
-	double			dir_x;
-	double			dir_y;
-	double			dir_z;
+	t_vector		pos;
+	t_vector		dir;
 	double			radius;
+	double			angle;
+	int				tarnish;
 	int				red;
 	int				green;
 	int				blue;
-	int				color;
-	int				tarnish;
-	int				num;
+	int				type;
 }					t_figure;
-
-typedef	struct		s_ray
-{
-	double			ray_x;
-	double			ray_y;
-	double			ray_z;
-}					t_ray;
 
 typedef struct		s_light
 {
 	double			intensity_amb;
 	double			intensity;
-	double			pos_x;
-	double			pos_y;
-	double			pos_z;
-	double			intensity_dir;
-	double			dir_x;
-	double			dir_y;
-	double			dir_z;
+	t_vector		pos;
+	t_vector		dir;
+	int				counter;
 }					t_light;
 
 typedef	struct		s_pool
 {
 	Uint32			render_flags;
 	const Uint8		*keyboard_state;
-	t_eye			*eye;
-	t_viewport		*viewport;
+	t_vector		cam;
+	t_vector		viewport;
+	t_vector		ray;
 	t_figure		*figure;
 	t_sdl			*sdl;
-	t_ray			*ray;
 	t_light			*light;
-	// t_tube			*tube;
 	double			closest_t;
 	double			shadow_t;
-	double			x;
-	double			y;
-	double			z;
+	int				sdw_figure;
+	int 			cls_figure;
+	t_vector		coord;
 	double			light_int;
 	double			t1;
 	double			t2;
 	double			sdw_t1;
 	double			sdw_t2;
-	double			p_x;
-	double			p_y;
-	double			p_z;
-	double			l_x;
-	double			l_y;
-	double			l_z;
-	double			r_x;
-	double			r_y;
-	double			r_z;
-	double			v_x;
-	double			v_y;
-	double			v_z;
-	double			normal_x;
-	double			normal_y;
-	double			normal_z;
+	t_vector		p;
+	t_vector		l;
+	t_vector		r;
+	t_vector		v;
+	t_vector		normal;
+	int				fig_counter;
 }					t_pool;
 
 void				initialization(t_pool *pool);
 void				cleaner(t_pool *pool);
 int					render(t_pool *pool);
+void				scene_one(t_pool *pool);
+void				scene_two(t_pool *pool);
+void				intersect_shadow_sphere(t_pool *pool, int i);
+void				create_shadow(t_pool *pool);
+void				create_light(t_pool *pool);
+void				intersect_ray_sphere(t_pool *pool, int i);
+int					ret_color(t_pool *pool);
+double				dot(t_vector arg_1, t_vector arg_2);
+void				intersect_ray_cylinder(t_pool *pool, int i);
+void				sintersect_shadow_cylinder(t_pool *pool, int i);
 
 #endif
