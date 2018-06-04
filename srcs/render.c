@@ -21,9 +21,9 @@ static	void	shmatok(t_pool *pool)
 
 static	void	shmatok_2(t_pool *pool)
 {
-	pool->normal_x = pool->p_x - pool->sphere->fig_x;
-	pool->normal_y = pool->p_y - pool->sphere->fig_y;
-	pool->normal_z = pool->p_z - pool->sphere->fig_z;
+	pool->normal_x = pool->p_x - pool->figure->fig_x;
+	pool->normal_y = pool->p_y - pool->figure->fig_y;
+	pool->normal_z = pool->p_z - pool->figure->fig_z;
 	pool->normal_x /= (sqrt(pow(pool->normal_x, 2) + pow(pool->normal_y, 2) + pow(pool->normal_z, 2)));
 	pool->normal_y /= (sqrt(pow(pool->normal_x, 2) + pow(pool->normal_y, 2) + pow(pool->normal_z, 2)));
 	pool->normal_z /= (sqrt(pow(pool->normal_x, 2) + pow(pool->normal_y, 2) + pow(pool->normal_z, 2)));
@@ -41,7 +41,7 @@ static	void	find_r(t_pool *pool)
 
 static	int	create_shadows(t_pool *pool)
 {
-	int		sdw_sphere = -1;
+	int		sdw_figure = -1;
 	double	shadow_t;
 	double	disc;
 	double	k1;
@@ -49,13 +49,13 @@ static	int	create_shadows(t_pool *pool)
 	double	k3;
 
 	shadow_t = INFINITY;
-	pool->x = pool->p_x - pool->sphere->fig_x;
-	pool->y = pool->p_y - pool->sphere->fig_y;
-	pool->z = pool->p_z - pool->sphere->fig_z;
+	pool->x = pool->p_x - pool->figure->fig_x;
+	pool->y = pool->p_y - pool->figure->fig_y;
+	pool->z = pool->p_z - pool->figure->fig_z;
 
 	k1 = X16 + X17 + X18;
 	k2 = 2 * (X19 + X20 + X21);
-	k3 = (X22 + X23 + X24) - pow(pool->sphere->radius, 2);
+	k3 = (X22 + X23 + X24) - pow(pool->figure->radius, 2);
 	disc = pow(k2, 2) - (4 * k1 * k3);
 	if (disc < 0)
 	{
@@ -70,14 +70,14 @@ static	int	create_shadows(t_pool *pool)
 	if (pool->sdw_t1 > 1 && pool->sdw_t1 < INFINITY && pool->sdw_t1 < shadow_t)
 	{
 		shadow_t = pool->sdw_t1;
-		sdw_sphere = 1;
+		sdw_figure = 1;
 	}
 	if (pool->sdw_t2 > 1 && pool->sdw_t2 < INFINITY && pool->sdw_t2 < shadow_t)
 	{
 		shadow_t = pool->sdw_t2;
-		sdw_sphere = 1;
+		sdw_figure = 1;
 	}
-	// if (cls_sphere == -1)
+	// if (cls_figure == -1)
 	// 	return (0);
 	return(shadow_t);
 }
@@ -107,7 +107,7 @@ static	void	point_light(t_pool *pool)
 		return ;
 	if (scal > 0)
 		pool->light_int += pool->light->intensity * scal / (sqrt(pow(pool->normal_x, 2) + pow(pool->normal_y, 2) + pow(pool->normal_z, 2))) * (sqrt(pow(pool->l_x, 2) + pow(pool->l_y, 2) + pow(pool->l_z, 2)));
-	if (pool->sphere->tarnish != -1)
+	if (pool->figure->tarnish != -1)
 	{
 		find_r(pool);
 		pool->v_x = pool->ray->ray_x;
@@ -118,7 +118,7 @@ static	void	point_light(t_pool *pool)
 		pool->v_z *= -1;
 		scal_2 = X13 + X14 + X15;
 		if (scal_2 > 0)
-			pool->light_int += pool->light->intensity * pow(scal_2 / (sqrt(pow(pool->r_x, 2) + pow(pool->r_y, 2) + pow(pool->r_z, 2))) * (sqrt(pow(pool->v_x, 2) + pow(pool->v_y, 2) + pow(pool->v_z, 2))), pool->sphere->tarnish);
+			pool->light_int += pool->light->intensity * pow(scal_2 / (sqrt(pow(pool->r_x, 2) + pow(pool->r_y, 2) + pow(pool->r_z, 2))) * (sqrt(pow(pool->v_x, 2) + pow(pool->v_y, 2) + pow(pool->v_z, 2))), pool->figure->tarnish);
 	}
 }
 
@@ -139,7 +139,7 @@ static	void	dir_light(t_pool *pool)
 		return ;
 	if (scal > 0)
 		pool->light_int += pool->light->intensity * scal / (sqrt(pow(pool->normal_x, 2) + pow(pool->normal_y, 2) + pow(pool->normal_z, 2))) * (sqrt(pow(pool->l_x, 2) + pow(pool->l_y, 2) + pow(pool->l_z, 2)));
-	if (pool->sphere->tarnish != -1)
+	if (pool->figure->tarnish != -1)
 	{
 		find_r(pool);
 		pool->v_x = pool->ray->ray_x;
@@ -150,7 +150,7 @@ static	void	dir_light(t_pool *pool)
 		pool->v_z *= -1;
 		scal_2 = X13 + X14 + X15;
 		if (scal_2 > 0)
-			pool->light_int += pool->light->intensity * pow(scal_2 / (sqrt(pow(pool->r_x, 2) + pow(pool->r_y, 2) + pow(pool->r_z, 2))) * (sqrt(pow(pool->v_x, 2) + pow(pool->v_y, 2) + pow(pool->v_z, 2))), pool->sphere->tarnish);
+			pool->light_int += pool->light->intensity * pow(scal_2 / (sqrt(pow(pool->r_x, 2) + pow(pool->r_y, 2) + pow(pool->r_z, 2))) * (sqrt(pow(pool->v_x, 2) + pow(pool->v_y, 2) + pow(pool->v_z, 2))), pool->figure->tarnish);
 	}
 }
 
@@ -164,7 +164,7 @@ static	void	create_light(t_pool *pool)
 
 int	render(t_pool *pool)
 {
-	int		cls_sphere = -1;
+	int		cls_figure = -1;
 	double	disc;
 	double	k1;
 	double	k2;
@@ -173,54 +173,89 @@ int	render(t_pool *pool)
 	unsigned int g = 0;
 	unsigned int b = 0;
 
-	pool->closest_t = INFINITY;
-	pool->x = pool->eye->eye_x - pool->sphere->fig_x;
-	pool->y = pool->eye->eye_y - pool->sphere->fig_y;
-	pool->z = pool->eye->eye_z - pool->sphere->fig_z;
+	// if (pool->figure->num == 1)
+	// {
+		pool->closest_t = INFINITY;
+		pool->x = pool->eye->eye_x - pool->figure->fig_x;
+		pool->y = pool->eye->eye_y - pool->figure->fig_y;
+		pool->z = pool->eye->eye_z - pool->figure->fig_z;
 
-	k1 = X1 + X2 + X3;
-	k2 = 2 * (X4 + X5 + X6);
-	k3 = (X7 + X8 + X9) - pow(pool->sphere->radius, 2);
-	disc = pow(k2, 2) - (4 * k1 * k3);
-	if (disc < 0)
-	{
-		pool->t1 = INFINITY;
-		pool->t2 = INFINITY;
-	}
-	else
-	{
-		pool->t1 = (-k2 + sqrt(disc)) / (2 * k1);
-		pool->t2 = (-k2 - sqrt(disc)) / (2 * k1);
-	}
-	if (pool->t1 > 1 && pool->t1 < INFINITY && pool->t1 < pool->closest_t)
-	{
-		pool->closest_t = pool->t1;
-		cls_sphere = 1;
-	}
-	if (pool->t2 > 1 && pool->t2 < INFINITY && pool->t2 < pool->closest_t)
-	{
-		pool->closest_t = pool->t2;
-		cls_sphere = 1;
-	}
-	pool->sphere->color = (r << 16) + (g << 8) + b;
-	if (cls_sphere == -1)
-		return (pool->sphere->color);
-	shmatok(pool);
-	shmatok_2(pool);
-	create_light(pool);
+		k1 = X1 + X2 + X3;
+		k2 = 2 * (X4 + X5 + X6);
+		k3 = (X7 + X8 + X9) - pow(pool->figure->radius, 2);
+		disc = pow(k2, 2) - (4 * k1 * k3);
+		if (disc < 0)
+		{
+			pool->t1 = INFINITY;
+			pool->t2 = INFINITY;
+		}
+		else
+		{
+			pool->t1 = (-k2 + sqrt(disc)) / (2 * k1);
+			pool->t2 = (-k2 - sqrt(disc)) / (2 * k1);
+		}
+		if (pool->t1 > 1 && pool->t1 < INFINITY && pool->t1 < pool->closest_t)
+		{
+			pool->closest_t = pool->t1;
+			cls_figure = 1;
+		}
+		if (pool->t2 > 1 && pool->t2 < INFINITY && pool->t2 < pool->closest_t)
+		{
+			pool->closest_t = pool->t2;
+			cls_figure = 1;
+		}
+		pool->figure->color = (r << 16) + (g << 8) + b;
+		if (cls_figure == -1)
+			return (pool->figure->color);
+		shmatok(pool);
+		shmatok_2(pool);
+		create_light(pool);
 
-	if ((pool->sphere->red * pool->light_int) > 255)
-		r = 255;
-	else
-		r = pool->sphere->red * pool->light_int;
-	if ((pool->sphere->green * pool->light_int) > 255)
-		g = 255;
-	else
-		g = pool->sphere->green * pool->light_int;
-	if ((pool->sphere->blue * pool->light_int) > 255)
-		b = 255;
-	else
-		b = pool->sphere->blue * pool->light_int;
-	pool->sphere->color = (r << 16) + (g << 8) + b;
-	return (pool->sphere->color);
+		if ((pool->figure->red * pool->light_int) > 255)
+			r = 255;
+		else
+			r = pool->figure->red * pool->light_int;
+		if ((pool->figure->green * pool->light_int) > 255)
+			g = 255;
+		else
+			g = pool->figure->green * pool->light_int;
+		if ((pool->figure->blue * pool->light_int) > 255)
+			b = 255;
+		else
+			b = pool->figure->blue * pool->light_int;
+		pool->figure->color = (r << 16) + (g << 8) + b;
+		return (pool->figure->color);
+	// }
+	// if (pool->figure->num == 2)
+	// {
+	// 	pool->closest_t = INFINITY;
+	// 	pool->x = pool->eye->eye_x - pool->figure->fig_x;
+	// 	pool->y = pool->eye->eye_y - pool->figure->fig_y;
+	// 	pool->z = pool->eye->eye_z - pool->figure->fig_z;
+
+	// 	double		result[3];
+	// 	double		discriminant;
+	// 	// t_vector	v;
+
+	// 	if (k == 0)
+	// 	{
+	// 		rewrite_vect(&v, DIR);
+	// 		minus_vect(main.cam.cam, POS, &OC);
+	// 	}
+	// 	else
+	// 	{
+	// 		rewrite_vect(&v, main.l);
+	// 		minus_vect(main.p, POS, &OC);
+	// 	}
+	// 	normalize(&FDIR);
+	// 	result[0] = dot(v, v) - pow(dot(v, FDIR), 2);
+	// 	result[1] = 2 * (dot(v, OC) - (dot(v, FDIR) * dot(OC, FDIR)));
+	// 	result[2] = dot(OC, OC) - pow(dot(OC, FDIR), 2) - pow(radius, 2);
+	// 	discriminant = pow(result[1], 2) - (4 * result[0] * result[2]);
+	// 	if (discriminant < 0)
+	// 		return (main);
+	// 	main.t1 = (-result[1] + sqrt(discriminant)) / (2 * result[0]);
+	// 	main.t2 = (-result[1] - sqrt(discriminant)) / (2 * result[0]);
+	// 	return (main);
+	// 	}
 }

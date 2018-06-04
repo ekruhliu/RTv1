@@ -14,17 +14,36 @@
 
 static	void	init_sphere(t_pool *pool)
 {
-	pool->sphere->fig_x = 0;
-	pool->sphere->fig_y = 0;
-	pool->sphere->fig_z = 0;
-	pool->sphere->radius = 2.5;
-	// (ft_atoi(argv) == 2 ? pool->sphere->radius = 1.5 : 0);
-	pool->sphere->red = 0;
-	pool->sphere->green = 0;
-	pool->sphere->blue = 0;
-	pool->sphere->red = 255;
-	// (ft_atoi(argv) == 2 ? pool->sphere->green = 255 : 0);
-	pool->sphere->tarnish = 1000000;
+	pool->figure->fig_x = 0;
+	pool->figure->fig_y = 0;
+	pool->figure->fig_z = 0;
+	pool->figure->dir_x = 0;
+	pool->figure->dir_y = 0;
+	pool->figure->dir_z = 0;
+	pool->figure->radius = 2.5;
+	pool->figure->red = 0;
+	pool->figure->green = 0;
+	pool->figure->blue = 0;
+	pool->figure->red = 255;
+	pool->figure->tarnish = 1000;
+	pool->figure->num = 1;
+}
+
+static	void	init_tube(t_pool *pool)
+{
+	pool->figure->fig_x = 0;
+	pool->figure->fig_y = 0;
+	pool->figure->fig_z = 0;
+	pool->figure->dir_x = 0;
+	pool->figure->dir_y = 1;
+	pool->figure->dir_z = 0;
+	pool->figure->radius = 1.5;
+	pool->figure->red = 0;
+	pool->figure->green = 255;
+	pool->figure->blue = 0;
+	pool->figure->red = 0;
+	pool->figure->tarnish = 1000;
+	pool->figure->num = 2;
 }
 
 static	void	init_light(t_pool *pool)
@@ -44,8 +63,11 @@ static	void	part_one(t_pool *pool, char *argv)
 {
 	ST_SDL = malloc(sizeof(t_sdl));
 	DONE = SDL_FALSE;
-	initialization(pool, argv);
-	init_sphere(pool);
+	initialization(pool);
+	if (ft_atoi(argv) == 1)
+		init_sphere(pool);
+	if (ft_atoi(argv) == 2)
+		init_tube(pool);
 	init_light(pool);
 	ST_SDL->scene = malloc(sizeof(int) * (W * H));
 }

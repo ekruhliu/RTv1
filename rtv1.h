@@ -96,23 +96,36 @@ typedef struct		s_sdl
 	int				*scene;
 }					t_sdl;
 
-typedef	struct		s_sphere
+// typedef	struct		s_sphere
+// {
+// 	double			fig_x;
+// 	double			fig_y;
+// 	double			fig_z;
+// 	double			radius;
+// 	int				red;
+// 	int				green;
+// 	int				blue;
+// 	int				color;
+// 	int				tarnish;
+// 	int				num;
+// }					t_sphere;
+
+typedef	struct		s_figure
 {
 	double			fig_x;
 	double			fig_y;
 	double			fig_z;
+	double			dir_x;
+	double			dir_y;
+	double			dir_z;
 	double			radius;
 	int				red;
 	int				green;
 	int				blue;
 	int				color;
 	int				tarnish;
-}					t_sphere;
-
-typedef	struct		s_tube
-{
-
-}					t_tube;
+	int				num;
+}					t_figure;
 
 typedef	struct		s_ray
 {
@@ -140,11 +153,11 @@ typedef	struct		s_pool
 	const Uint8		*keyboard_state;
 	t_eye			*eye;
 	t_viewport		*viewport;
-	t_sphere		*sphere;
+	t_figure		*figure;
 	t_sdl			*sdl;
 	t_ray			*ray;
 	t_light			*light;
-	t_tube			*tube;
+	// t_tube			*tube;
 	double			closest_t;
 	double			shadow_t;
 	double			x;
@@ -172,7 +185,7 @@ typedef	struct		s_pool
 	double			normal_z;
 }					t_pool;
 
-void				initialization(t_pool *pool, char *argv);
+void				initialization(t_pool *pool);
 void				cleaner(t_pool *pool);
 int					render(t_pool *pool);
 
