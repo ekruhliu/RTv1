@@ -14,12 +14,14 @@
 
 static	void	init_light(t_pool *pool)
 {
-	pool->light = malloc(sizeof(t_light) * 1);
-	pool->light[0].intensity_amb = 0.2;
-	pool->light[0].intensity = 0.6;
-	pool->light[0].pos.x = 10;
-	pool->light[0].pos.y = 1;
-	pool->light[0].pos.z = -8;
+	pool->light = malloc(sizeof(t_light) * 2);
+	pool->light[0].intensity = 0.2;
+	pool->light[0].type = 1;
+	pool->light[1].intensity = 0.8;
+	pool->light[1].pos.x = 6;
+	pool->light[1].pos.y = 1;
+	pool->light[1].pos.z = -6;
+	pool->light[1].type = 2;
 	// pool->light[0].dir.x = 1;
 	// pool->light[0].dir.y = 0;
 	// pool->light[0].dir.z = 0;
@@ -31,7 +33,7 @@ static	void	init_light(t_pool *pool)
 	// pool->light[1].dir.x = -1;
 	// pool->light[1].dir.y = 0;
 	// pool->light[1].dir.z = 0;
-	pool->light->counter = 1;
+	pool->light_counter = 2;
 }
 
 static	void	part_one(t_pool *pool, char *argv)
@@ -43,10 +45,8 @@ static	void	part_one(t_pool *pool, char *argv)
 		scene_one(pool);
 	if (ft_atoi(argv) == 2)
 		scene_two(pool);
-	// if (ft_atoi(argv) == 3)
-	// {
-	// 	pool->figure = malloc(sizeof(t_figure) * 4);
-	// }
+	if (ft_atoi(argv) == 3)
+		scene_three(pool);
 	// if (ft_atoi(argv) == 4)
 	// {
 	// 	pool->figure = malloc(sizeof(t_figure) * 6);

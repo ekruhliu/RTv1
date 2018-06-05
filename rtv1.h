@@ -43,9 +43,10 @@
 # define X2 (sqrt(pow(pool->l.x, 2) + pow(pool->l.y, 2) + pow(pool->l.z, 2)))
 # define X3 (sqrt(pow(pool->r.x, 2) + pow(pool->r.y, 2) + pow(pool->r.z, 2)))
 # define X4 (sqrt(pow(pool->v.x, 2) + pow(pool->v.y, 2) + pow(pool->v.z, 2)))
-// # define X5 pool->y * pool->ray->ray_y
-// # define X6 pool->z * pool->ray->ray_z
-// # define X7 pool->x * pool->x
+# define X5 (sqrt(pow(copy_2.x, 2) + pow(copy_2.y, 2) + pow(copy_2.z, 2)))
+// # define X6 (sqrt(pow(x_2.x, 2) + pow(x_2.y, 2) + pow(x_2.z, 2)))
+// # define X7 (sqrt(pow(pool->figure[pool->cls_figure].dir.x, 2) + pow(pool->figure[pool->cls_figure].dir.y, 2) + pow(pool->figure[pool->cls_figure].dir.z, 2)))
+# define X8 (sqrt(pow(x_4.x, 2) + pow(x_4.y, 2) + pow(x_4.z, 2)))
 // # define X8 pool->y * pool->y
 // # define X9 pool->z * pool->z
 // # define BIT_RED (pool->figure->red << 16)
@@ -106,11 +107,11 @@ typedef	struct		s_figure
 
 typedef struct		s_light
 {
-	double			intensity_amb;
+	// double			intensity_amb;
+	int				type;
 	double			intensity;
 	t_vector		pos;
 	t_vector		dir;
-	int				counter;
 }					t_light;
 
 typedef	struct		s_pool
@@ -139,6 +140,7 @@ typedef	struct		s_pool
 	t_vector		v;
 	t_vector		normal;
 	int				fig_counter;
+	int				light_counter;
 }					t_pool;
 
 void				initialization(t_pool *pool);
@@ -146,6 +148,7 @@ void				cleaner(t_pool *pool);
 int					render(t_pool *pool);
 void				scene_one(t_pool *pool);
 void				scene_two(t_pool *pool);
+void				scene_three(t_pool *pool);
 void				intersect_shadow_sphere(t_pool *pool, int i);
 void				create_shadow(t_pool *pool);
 void				create_light(t_pool *pool);
@@ -154,5 +157,8 @@ int					ret_color(t_pool *pool);
 double				dot(t_vector arg_1, t_vector arg_2);
 void				intersect_ray_cylinder(t_pool *pool, int i);
 void				sintersect_shadow_cylinder(t_pool *pool, int i);
+int					intersect_ray_plane(t_pool *pool, int i);
+void				intersect_ray_cone(t_pool *pool, int i);
+void				intersect_shadow_cone(t_pool *pool, int i);
 
 #endif
