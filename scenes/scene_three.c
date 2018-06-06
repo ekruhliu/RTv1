@@ -31,17 +31,17 @@ void	scene_three(t_pool *pool)
 	pool->figure[0].tarnish = 1000;
 	pool->figure[0].angle = 50;
 
-	pool->figure[1].type = 3;
-	pool->figure[1].pos.x = 0;
-	pool->figure[1].pos.y = -4;
-	pool->figure[1].pos.z = 1;
-	pool->figure[1].dir.x = 0;
-	pool->figure[1].dir.y = -4;
-	pool->figure[1].dir.z = 1;
-	pool->figure[1].red = 0;
-	pool->figure[1].blue = 0;
-	pool->figure[1].green = 210;
-	pool->figure[1].tarnish = 100;
+	// pool->figure[1].type = 3;
+	// pool->figure[1].pos.x = 0;
+	// pool->figure[1].pos.y = -4;
+	// pool->figure[1].pos.z = 1;
+	// pool->figure[1].dir.x = 0;
+	// pool->figure[1].dir.y = -4;
+	// pool->figure[1].dir.z = 1;
+	// pool->figure[1].red = 0;
+	// pool->figure[1].blue = 0;
+	// pool->figure[1].green = 210;
+	// pool->figure[1].tarnish = 100;
 
 	// pool->figure[0].pos.x = 0;//-4;
 	// pool->figure[0].pos.y = 0;//-2;

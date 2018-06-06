@@ -113,7 +113,7 @@ int				render(t_pool *pool)
 	{
 		(pool->figure[i].type == 1 ? intersect_ray_sphere(pool, i) : 0);
 		(pool->figure[i].type == 2 ? intersect_ray_cylinder(pool, i) : 0);
-		(pool->figure[i].type == 3 ? intersect_ray_plane(pool, i) : 0);
+		// (pool->figure[i].type == 3 ? intersect_ray_plane(pool, i) : 0);
 		(pool->figure[i].type == 4 ? intersect_ray_cone(pool, i) : 0);
 		// if (pool->figure[i].type == 3)
 		// {

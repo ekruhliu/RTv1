@@ -97,13 +97,13 @@ void	intersect_ray_cylinder(t_pool *pool, int i)
 	pool->t2 = (-x2 - sqrt(discriminant)) / (2 * x1);
 }
 
-int	intersect_ray_plane(t_pool *pool, int i)
-{
-	double	x1;
+// int	intersect_ray_plane(t_pool *pool, int i)
+// {
+	// double	x1;
 	// t_vector copy_1;
 	// t_vector copy_2;
-	double	x2;
-	double	x3;
+	// double	x2;
+	// double	x3;
 	// double	discriminant;
 
 	
@@ -148,4 +148,4 @@ int	intersect_ray_plane(t_pool *pool, int i)
 	// }
 	// pool->t1 = (-x2 + sqrt(discriminant)) / (2 * x1);
 	// pool->t2 = (-x2 - sqrt(discriminant)) / (2 * x1);
-}
+// }
