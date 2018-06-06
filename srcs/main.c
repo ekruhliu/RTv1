@@ -17,10 +17,10 @@ static	void	init_light(t_pool *pool)
 	pool->light = malloc(sizeof(t_light) * 2);
 	pool->light[0].intensity = 0.2;
 	pool->light[0].type = 1;
-	pool->light[1].intensity = 0.8;
-	pool->light[1].pos.x = 6;
-	pool->light[1].pos.y = 1;
-	pool->light[1].pos.z = -6;
+	pool->light[1].intensity = 0.6;
+	pool->light[1].pos.x = 3;
+	pool->light[1].pos.y = 0;
+	pool->light[1].pos.z = -1;
 	pool->light[1].type = 2;
 	// pool->light[0].dir.x = 1;
 	// pool->light[0].dir.y = 0;

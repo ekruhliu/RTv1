@@ -44,6 +44,7 @@
 # define X3 (sqrt(pow(pool->r.x, 2) + pow(pool->r.y, 2) + pow(pool->r.z, 2)))
 # define X4 (sqrt(pow(pool->v.x, 2) + pow(pool->v.y, 2) + pow(pool->v.z, 2)))
 # define X5 (sqrt(pow(copy_2.x, 2) + pow(copy_2.y, 2) + pow(copy_2.z, 2)))
+
 // # define X6 (sqrt(pow(x_2.x, 2) + pow(x_2.y, 2) + pow(x_2.z, 2)))
 // # define X7 (sqrt(pow(pool->figure[pool->cls_figure].dir.x, 2) + pow(pool->figure[pool->cls_figure].dir.y, 2) + pow(pool->figure[pool->cls_figure].dir.z, 2)))
 # define X8 (sqrt(pow(x_4.x, 2) + pow(x_4.y, 2) + pow(x_4.z, 2)))

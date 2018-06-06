@@ -25,7 +25,7 @@ void	intersect_ray_sphere(t_pool *pool, int i)
 	x1 = DOT(pool->ray, pool->ray);
 	x2 = 2 * DOT(pool->coord, pool->ray);
 	x3 = DOT(pool->coord, pool->coord) - RADIUS * RADIUS;
-	discriminant = x2 * x2 - 4 * x1 * x3;
+	discriminant = (x2 * x2) - (4 * x1 * x3);
 	if (discriminant < 0)
 	{
 		pool->t1 = INFINITY;
@@ -100,36 +100,37 @@ void	intersect_ray_cylinder(t_pool *pool, int i)
 int	intersect_ray_plane(t_pool *pool, int i)
 {
 	double	x1;
-	t_vector copy_1;
-	t_vector copy_2;
-	// double	x2;
-	// double	x3;
+	// t_vector copy_1;
+	// t_vector copy_2;
+	double	x2;
+	double	x3;
 	// double	discriminant;
 
+	
 	// pool->coord.x = pool->cam.x - pool->figure[i].pos.x;
 	// pool->coord.y = pool->cam.y - pool->figure[i].pos.y;
 	// pool->coord.z = pool->cam.z - pool->figure[i].pos.z;
-	copy_1.x = pool->ray.x;
-	copy_1.y = pool->ray.y;
-	copy_1.z = pool->ray.z;
-	copy_2.x = pool->figure[i].dir.x;
-	copy_2.y = pool->figure[i].dir.y;
-	copy_2.z = pool->figure[i].dir.z;
-	double inv = 1 / X5;
-	copy_2.x *= inv;
-	copy_2.y *= inv;
-	copy_2.z *= inv;
-	pool->coord.x *= -1;
-	pool->coord.y *= -1;
-	pool->coord.z *= -1;
-	x1 = DOT(pool->coord, copy_2) / DOT(copy_1, copy_2);
-	copy_2.x *= -1;
-	copy_2.y *= -1;
-	copy_2.z *= -1;
-	pool->normal.x = copy_2.x;
-	pool->normal.y = copy_2.y;
-	pool->normal.z = copy_2.z;
-	return (x1);
+	// copy_1.x = pool->ray.x;
+	// copy_1.y = pool->ray.y;
+	// copy_1.z = pool->ray.z;
+	// copy_2.x = pool->figure[i].dir.x;
+	// copy_2.y = pool->figure[i].dir.y;
+	// copy_2.z = pool->figure[i].dir.z;
+	// double inv = 1 / X5;
+	// copy_2.x *= inv;
+	// copy_2.y *= inv;
+	// copy_2.z *= inv;
+	// pool->coord.x *= -1;
+	// pool->coord.y *= -1;
+	// pool->coord.z *= -1;
+	// x1 = DOT(pool->coord, copy_2) / DOT(copy_1, copy_2);
+	// copy_2.x *= -1;
+	// copy_2.y *= -1;
+	// copy_2.z *= -1;
+	// pool->normal.x = copy_2.x;
+	// pool->normal.y = copy_2.y;
+	// pool->normal.z = copy_2.z;
+	// return (x1);
 	// if (x1 > 1 && x1 < INFINITY && x1 < pool->closest_t)
 	// {
 	// 	pool->closest_t = x1;

@@ -25,7 +25,7 @@ void	intersect_shadow_sphere(t_pool *pool, int i)
 	x1 = DOT(pool->l, pool->l);
 	x2 = 2 * DOT(pool->coord, pool->l);
 	x3 = DOT(pool->coord, pool->coord) - RADIUS * RADIUS;
-	discriminant = pow(x2, 2) - (4 * x1 * x3);
+	discriminant = (x2 * x2) - (4 * x1 * x3);
 	if (discriminant < 0)
 	{
 		pool->t1 = INFINITY;

@@ -27,9 +27,11 @@ static	void	find_r(t_pool *pool, double	n_dot_l)
 
 static	void	find_v(t_pool *pool)
 {
-	pool->v.x = pool->ray.x;
-	pool->v.y = pool->ray.y;
-	pool->v.z = pool->ray.z;
+	// pool->v.x = pool->ray.x;
+	// pool->v.y = pool->ray.y;
+	// pool->v.z = pool->ray.z;
+	pool->v = pool->ray;
+	// ЭТО СОКРАТИТ КОД ПИЗДЕЦ КАК !!!!!!!!!!!!!
 	pool->v.x *= -1;
 	pool->v.y *= -1;
 	pool->v.z *= -1;
@@ -53,7 +55,6 @@ void	create_light(t_pool *pool)
 			pool->l.x = pool->light[i].pos.x - pool->p.x;
 			pool->l.y = pool->light[i].pos.y - pool->p.y;
 			pool->l.z = pool->light[i].pos.z - pool->p.z;
-			
 			create_shadow(pool);
 			if (pool->sdw_figure != -1)
 				continue ;
