@@ -38,42 +38,14 @@
 # define TEX_FMR_SRF SDL_CreateTextureFromSurface
 # define REND_CPY SDL_RenderCopy
 # define RADIUS pool->figure[i].radius
-# define DOT(x_1, x_2) ((x_1.x * x_2.x) + (x_1.y * x_2.y) + (x_1.z * x_2.z))
+# define DOT(x1, x2) ((x1.x * x2.x) + (x1.y * x2.y) + (x1.z * x2.z))
 # define X1 (sqrt(pow(pool->normal.x, 2) + pow(pool->normal.y, 2) + pow(pool->normal.z, 2)))
 # define X2 (sqrt(pow(pool->l.x, 2) + pow(pool->l.y, 2) + pow(pool->l.z, 2)))
 # define X3 (sqrt(pow(pool->r.x, 2) + pow(pool->r.y, 2) + pow(pool->r.z, 2)))
 # define X4 (sqrt(pow(pool->v.x, 2) + pow(pool->v.y, 2) + pow(pool->v.z, 2)))
 # define X5 (sqrt(pow(copy_2.x, 2) + pow(copy_2.y, 2) + pow(copy_2.z, 2)))
-
-// # define X6 (sqrt(pow(x_2.x, 2) + pow(x_2.y, 2) + pow(x_2.z, 2)))
-// # define X7 (sqrt(pow(pool->figure[pool->cls_figure].dir.x, 2) + pow(pool->figure[pool->cls_figure].dir.y, 2) + pow(pool->figure[pool->cls_figure].dir.z, 2)))
-# define X8 (sqrt(pow(x_4.x, 2) + pow(x_4.y, 2) + pow(x_4.z, 2)))
-// # define X8 pool->y * pool->y
-// # define X9 pool->z * pool->z
-// # define BIT_RED (pool->figure->red << 16)
-// # define BIT_GREEN (pool->figure->green << 8)
-// # define BIT_BLUE (pool->figure->blue)
-// # define X10 pool->normal_x * pool->l_x
-// # define X11 pool->normal_y * pool->l_y
-// # define X12 pool->normal_z * pool->l_z
-// # define X13 pool->r_x * pool->v_x
-// # define X14 pool->r_y * pool->v_y
-// # define X15 pool->r_z * pool->v_z
-// # define X16 pool->l_x * pool->l_x
-// # define X17 pool->l_y * pool->l_y
-// # define X18 pool->l_z * pool->l_y
-// # define X19 pool->x * pool->l_x
-// # define X20 pool->y * pool->l_y
-// # define X21 pool->z * pool->l_z
-// # define X22 pool->x * pool->x
-// # define X23 pool->y * pool->y
-// # define X24 pool->z * pool->z
-// # define X25
-// # define X26
-// # define X27
-// # define X28
-// # define X29
-// # define X30
+# define X7 (sqrt(pow(pool->figure[i].dir.x, 2) + pow(pool->figure[i].dir.y, 2) + pow(pool->figure[i].dir.z, 2)))
+# define X8 (sqrt(pow(pool->var->x4.x, 2) + pow(pool->var->x4.y, 2) + pow(pool->var->x4.z, 2)))
 
 typedef	struct		s_vector
 {
@@ -108,12 +80,21 @@ typedef	struct		s_figure
 
 typedef struct		s_light
 {
-	// double			intensity_amb;
-	int				type;
 	double			intensity;
 	t_vector		pos;
-	t_vector		dir;
 }					t_light;
+
+typedef	struct		s_variable
+{
+	double		x1;
+	t_vector	x2;
+	t_vector	x3;
+	t_vector	x4;
+	t_vector	x5;
+	double		x6;
+	double		x7;
+	double		x8;
+}					t_variable;
 
 typedef	struct		s_pool
 {
@@ -142,6 +123,9 @@ typedef	struct		s_pool
 	t_vector		normal;
 	int				fig_counter;
 	int				light_counter;
+	double			cone_radiana;
+	double			amb_light;
+	t_variable		*var;
 }					t_pool;
 
 void				initialization(t_pool *pool);
@@ -157,9 +141,16 @@ void				intersect_ray_sphere(t_pool *pool, int i);
 int					ret_color(t_pool *pool);
 double				dot(t_vector arg_1, t_vector arg_2);
 void				intersect_ray_cylinder(t_pool *pool, int i);
-void				sintersect_shadow_cylinder(t_pool *pool, int i);
-int					intersect_ray_plane(t_pool *pool, int i);
+void				intersect_shadow_cylinder(t_pool *pool, int i);
+void				intersect_ray_plane(t_pool *pool, int i);
 void				intersect_ray_cone(t_pool *pool, int i);
 void				intersect_shadow_cone(t_pool *pool, int i);
+void				intersect_shadow_plane(t_pool *pool, int i);
+void				intersect_ray_figures(t_pool *pool, int i);
+void				intersect_shadow_figures(t_pool *pool, int i);
+void				find_normal_sphere(t_pool *pool);
+void				find_normal_cylinder(t_pool *pool);
+void				find_normal_plane(t_pool *pool);
+void				find_normal_cone(t_pool *pool);
 
 #endif

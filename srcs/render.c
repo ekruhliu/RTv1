@@ -21,110 +21,22 @@ static	void	intersection(t_pool *pool)
 
 static	void	find_normal(t_pool *pool)
 {
-	double		x_1;
-	t_vector	x_2;
-	t_vector	x_3;
-	t_vector	x_4;
-	t_vector	x_5;
-	double		x_6;
-	double		x_7;
-	double		x_8;
-
-	if (pool->figure[pool->cls_figure].type == 1)
-	{
-		pool->normal.x = pool->p.x - pool->figure[pool->cls_figure].pos.x;
-		pool->normal.y = pool->p.y - pool->figure[pool->cls_figure].pos.y;
-		pool->normal.z = pool->p.z - pool->figure[pool->cls_figure].pos.z;
-
-		// pool->normal.x = pool->figure[pool->cls_figure].pos.x - pool->p.x;
-		// pool->normal.y = pool->figure[pool->cls_figure].pos.y - pool->p.y;
-		// pool->normal.z = pool->figure[pool->cls_figure].pos.z - pool->p.z;
-
-		pool->normal.x /= (sqrt(pow(pool->normal.x, 2) + pow(pool->normal.y, 2) + pow(pool->normal.z, 2)));
-		pool->normal.y /= (sqrt(pow(pool->normal.x, 2) + pow(pool->normal.y, 2) + pow(pool->normal.z, 2)));
-		pool->normal.z /= (sqrt(pow(pool->normal.x, 2) + pow(pool->normal.y, 2) + pow(pool->normal.z, 2)));
-	}
-	if (pool->figure[pool->cls_figure].type == 2)
-	{
-		x_2.x = pool->p.x - pool->figure[pool->cls_figure].pos.x;
-		x_2.y = pool->p.y - pool->figure[pool->cls_figure].pos.y;
-		x_2.z = pool->p.z - pool->figure[pool->cls_figure].pos.z;
-		x_1 = DOT(pool->figure[pool->cls_figure].dir, x_2);
-		x_3.x = x_1 * pool->figure[pool->cls_figure].dir.x;
-		x_3.y = x_1 * pool->figure[pool->cls_figure].dir.y;
-		x_3.z = x_1 * pool->figure[pool->cls_figure].dir.z;
-		x_4.x = x_2.x - x_3.x;
-		x_4.y = x_2.y - x_3.y;
-		x_4.z = x_2.z - x_3.z;
-		pool->normal.x = x_4.x / pool->figure[pool->cls_figure].radius;
-		pool->normal.y = x_4.y / pool->figure[pool->cls_figure].radius;
-		pool->normal.z = x_4.z / pool->figure[pool->cls_figure].radius;
-	}
-	if (pool->figure[pool->cls_figure].type == 3)
-	{
-		// pool->normal.x = pool->figure[pool->cls_figure].dir.x;
-		// pool->normal.y = pool->figure[pool->cls_figure].dir.y;
-		// pool->normal.z = pool->figure[pool->cls_figure].dir.z;
-		// pool->normal = pool->figure[pool->cls_figure].dir;
-		// pool->normal.x *= -1;
-		// pool->normal.y *= -1;
-		// pool->normal.z *= -1;
-		pool->normal.x = 1;
-		pool->normal.y = 1;
-		pool->normal.z = 1;
-	}
-	if (pool->figure[pool->cls_figure].type == 4)
-	{
-		x_2.x = pool->p.x - pool->figure[pool->cls_figure].pos.x;
-		x_2.y = pool->p.y - pool->figure[pool->cls_figure].pos.y;
-		x_2.z = pool->p.z - pool->figure[pool->cls_figure].pos.z;
-		x_6 = (sqrt(pow(x_2.x, 2) + pow(x_2.y, 2) + pow(x_2.z, 2)));
-		x_7 = (sqrt(pow(pool->figure[pool->cls_figure].dir.x, 2) + pow(pool->figure[pool->cls_figure].dir.y, 2) + pow(pool->figure[pool->cls_figure].dir.z, 2)));
-		x_8 = ((x_2.x * pool->figure[pool->cls_figure].dir.x) + (x_2.y * pool->figure[pool->cls_figure].dir.y) + (x_2.z * pool->figure[pool->cls_figure].dir.z));
-		x_1 = (x_8 / (x_6 * x_7));
-		x_3.x = x_1 * pool->figure[pool->cls_figure].dir.x;
-		x_3.y = x_1 * pool->figure[pool->cls_figure].dir.y;
-		x_3.z = x_1 * pool->figure[pool->cls_figure].dir.z;
-		x_4.x = x_2.x - x_3.x;
-		x_4.y = x_2.y - x_3.y;
-		x_4.z = x_2.z - x_3.z;
-		x_5.x = (x_2.y * x_4.z) - (x_2.z * x_4.y);
-		x_5.y = (x_2.x * x_4.z) - (x_2.z * x_4.x);
-		x_5.z = (x_2.x * x_4.y) - (x_2.y * x_4.x);
-		x_4.x = (x_5.y * x_2.z) - (x_5.z * x_2.y);
-		x_4.y = (x_5.z * x_2.x) - (x_5.x * x_2.z);
-		x_4.z = (x_5.x * x_2.y) - (x_5.y * x_2.x);
-		pool->normal.x = x_4.x / (X8);
-		pool->normal.y = x_4.y / (X8);
-		pool->normal.z = x_4.z / (X8);
-	}
+	pool->figure[pool->cls_figure].type == 1 ? find_normal_sphere(pool) : 0;
+	pool->figure[pool->cls_figure].type == 2 ? find_normal_cylinder(pool) : 0;
+	pool->figure[pool->cls_figure].type == 3 ? find_normal_plane(pool) : 0;
+	pool->figure[pool->cls_figure].type == 4 ? find_normal_cone(pool) : 0;
 }
 
 int				render(t_pool *pool)
 {
 	int		i;
-	double	x;
 
 	i = -1;
-	x = 0.0;
 	pool->closest_t = INFINITY;
 	pool->cls_figure = -1;
 	while (++i < pool->fig_counter)
 	{
-		(pool->figure[i].type == 1 ? intersect_ray_sphere(pool, i) : 0);
-		(pool->figure[i].type == 2 ? intersect_ray_cylinder(pool, i) : 0);
-		// (pool->figure[i].type == 3 ? intersect_ray_plane(pool, i) : 0);
-		(pool->figure[i].type == 4 ? intersect_ray_cone(pool, i) : 0);
-		// if (pool->figure[i].type == 3)
-		// {
-		// 	x = intersect_ray_plane(pool, i);
-		// 	if (x > 1 && x < INFINITY && x < pool->closest_t)
-		// 	{
-		// 		pool->closest_t = x;
-		// 		pool->cls_figure = i;
-		// 	}
-		// 	continue ;
-		// }
+		intersect_ray_figures(pool, i);
 		if (pool->t1 > 1 && pool->t1 < INFINITY && pool->t1 < pool->closest_t)
 		{
 			pool->closest_t = pool->t1;

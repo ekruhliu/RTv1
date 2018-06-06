@@ -12,30 +12,6 @@
 
 #include "../rtv1.h"
 
-static	void	init_light(t_pool *pool)
-{
-	pool->light = malloc(sizeof(t_light) * 2);
-	pool->light[0].intensity = 0.2;
-	pool->light[0].type = 1;
-	pool->light[1].intensity = 0.6;
-	pool->light[1].pos.x = 3;
-	pool->light[1].pos.y = 0;
-	pool->light[1].pos.z = -1;
-	pool->light[1].type = 2;
-	// pool->light[0].dir.x = 1;
-	// pool->light[0].dir.y = 0;
-	// pool->light[0].dir.z = 0;
-
-	// pool->light[1].intensity = 0.4;
-	// pool->light[1].pos.x = 3;
-	// pool->light[1].pos.y = 0;
-	// pool->light[1].pos.z = -4;
-	// pool->light[1].dir.x = -1;
-	// pool->light[1].dir.y = 0;
-	// pool->light[1].dir.z = 0;
-	pool->light_counter = 2;
-}
-
 static	void	part_one(t_pool *pool, char *argv)
 {
 	ST_SDL = malloc(sizeof(t_sdl));
@@ -48,14 +24,9 @@ static	void	part_one(t_pool *pool, char *argv)
 	if (ft_atoi(argv) == 3)
 		scene_three(pool);
 	// if (ft_atoi(argv) == 4)
-	// {
-	// 	pool->figure = malloc(sizeof(t_figure) * 6);
-	// }
+	// 	scene_four(pool);
 	// if (ft_atoi(argv) == 5)
-	// {
-	// 	pool->figure = malloc(sizeof(t_figure) * 16);
-	// }
-	init_light(pool);
+	// 	scene_five(pool);
 	ST_SDL->scene = malloc(sizeof(int) * (W * H));
 }
 

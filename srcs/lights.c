@@ -12,10 +12,10 @@
 
 #include "../rtv1.h"
 
-static	void	amb_light(t_pool *pool, int i)
+static	void	amb_light(t_pool *pool)
 {
-	if (pool->light[i].intensity > 0.0)
-		pool->light_int += pool->light[i].intensity;
+	if (pool->amb_light > 0.0)
+		pool->light_int = pool->amb_light;
 }
 
 static	void	find_r(t_pool *pool, double	n_dot_l)
@@ -27,9 +27,6 @@ static	void	find_r(t_pool *pool, double	n_dot_l)
 
 static	void	find_v(t_pool *pool)
 {
-	// pool->v.x = pool->ray.x;
-	// pool->v.y = pool->ray.y;
-	// pool->v.z = pool->ray.z;
 	pool->v = pool->ray;
 	// ЭТО СОКРАТИТ КОД ПИЗДЕЦ КАК !!!!!!!!!!!!!
 	pool->v.x *= -1;
@@ -46,59 +43,28 @@ void	create_light(t_pool *pool)
 	pool->light_int = 0.0;
 	i = -1;
 	find_v(pool);
+	amb_light(pool);
 	while (++i < pool->light_counter)
 	{
-		if (pool->light[i].type == 1)
-			amb_light(pool, i);
-		else
+		pool->l.x = pool->light[i].pos.x - pool->p.x;
+		pool->l.y = pool->light[i].pos.y - pool->p.y;
+		pool->l.z = pool->light[i].pos.z - pool->p.z;
+		create_shadow(pool);
+		if (pool->sdw_figure != -1)
+			continue ;
+		n_dot_l = DOT(pool->normal, pool->l);
+		if (n_dot_l > 0)
+			pool->light_int += (pool->light[i].intensity * n_dot_l) / (X1 * X2);
+		if (pool->figure[pool->cls_figure].type != 3)
 		{
-			pool->l.x = pool->light[i].pos.x - pool->p.x;
-			pool->l.y = pool->light[i].pos.y - pool->p.y;
-			pool->l.z = pool->light[i].pos.z - pool->p.z;
-			create_shadow(pool);
-			if (pool->sdw_figure != -1)
-				continue ;
-			n_dot_l = DOT(pool->normal, pool->l);
-			if (n_dot_l > 0)
-				pool->light_int += pool->light[i].intensity * n_dot_l / (X1 * X2);
 			if (pool->figure[pool->cls_figure].tarnish != -1)
 			{
-				// // double x;
-
-				// find_r(pool, n_dot_l);
-				// pool->v.x = pool->ray.x * -1;
-				// pool->v.y = pool->ray.y * -1;
-				// pool->v.z = pool->ray.z * -1;
-				// r_dot_v = DOT(pool->r, pool->v);
-				// if (r_dot_v > 0)
-				// 	pool->light_int += pool->light[i].intensity * pow(r_dot_v / (X3 * X4), pool->figure->tarnish); 
 				find_r(pool, n_dot_l);
 				r_dot_v = DOT(pool->r, pool->v);
 				if (r_dot_v > 0)
 					pool->light_int += pool->light[i].intensity * pow(r_dot_v / (X3 * X4), pool->figure->tarnish);
 			}
-			// if (pool->figure[pool->cls_figure].type != 3)
-			// {
-			// 	if (pool->figure[pool->cls_figure].tarnish != -1)
-			// 	{
-			// 		if (pool->figure[pool->cls_figure].tarnish != -1)
-			// 		{
-			// 			find_r(pool, n_dot_l);
-			// 			r_dot_v = DOT(pool->r, pool->v);
-			// 			if (r_dot_v > 0)
-			// 				pool->light_int += pool->light[i].intensity * pow(r_dot_v / (X3 * X4), pool->figure->tarnish);
-			// 		}
-					// double x;
-
-					// find_r(pool, n_dot_l);
-					// pool->v.x = pool->ray.x * -1;
-					// pool->v.y = pool->ray.y * -1;
-					// pool->v.z = pool->ray.z * -1;
-					// x = DOT(pool->r, pool->v);
-					// if (x > 0)
-					// 	pool->light_int += pool->light[i].intensity * pow(x / (X3 * X4), pool->figure->tarnish); 
-				// }
-			// }
 		}
+
 	}
 }
