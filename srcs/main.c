@@ -18,7 +18,12 @@ static	void	part_one(t_pool *pool, char *argv)
 	DONE = SDL_FALSE;
 	initialization(pool);
 	if (ft_atoi(argv) == 1)
+	{
 		scene_one(pool);
+		ft_putstr("\033[1;34mAdd figure position in format: X Y Z\n\e[m");
+		ft_putstr("\033[1;34mOr press ENTER to add default position\n\e[m");
+		check_standart_input(pool);
+	}
 	if (ft_atoi(argv) == 2)
 		scene_two(pool);
 	if (ft_atoi(argv) == 3)
@@ -61,6 +66,8 @@ static	void	part_three(t_pool *pool)
 	REND_CPY(RENDER, SCREEN_TEX, NULL, NULL);
 	SDL_RenderPresent(ST_SDL->rend);
 	SDL_RenderClear(ST_SDL->rend);
+	KEY_STATE = SDL_GetKeyboardState(NULL);
+	SDL_PollEvent(&ST_SDL->event);
 	(KEY_STATE[SDL_SCANCODE_ESCAPE]) ? DONE = SDL_TRUE : (0);
 	(EVENT_TYPE == SDL_QUIT) ? DONE = SDL_TRUE : (0);
 	(KEY_STATE[SDL_SCANCODE_W]) ? go_ahead(pool) : 0;
@@ -84,8 +91,6 @@ int				main(int argc, char **argv)
 		part_one(pool, argv[1]);
 		while (!DONE)
 		{
-			KEY_STATE = SDL_GetKeyboardState(NULL);
-			SDL_PollEvent(&ST_SDL->event);
 			part_two(pool);
 			part_three(pool);
 		}

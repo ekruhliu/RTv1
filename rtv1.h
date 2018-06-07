@@ -185,5 +185,6 @@ void				go_ahead(t_pool *pool);
 void				go_back(t_pool *pool);
 void				go_right(t_pool *pool);
 void				go_left(t_pool *pool);
+void				check_standart_input(t_pool *pool);
 
 #endif

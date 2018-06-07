@@ -22,7 +22,7 @@ LIBFT = libft/libft.a
 
 SRCS = ./scenes/scene_one.c ./scenes/scene_two.c ./scenes/scene_three.c ./scenes/scene_four.c ./scenes/scene_five.c ./srcs/initialization.c ./srcs/cleaner.c ./srcs/render.c \
 ./srcs/shadows.c ./srcs/lights.c ./srcs/intersect_ray_figures.c ./srcs/colors.c ./srcs/figures/ft_sphere.c ./srcs/figures/ft_cylinder.c ./srcs/figures/ft_cone.c ./srcs/figures/ft_plane.c \
-./srcs/camera_moves/ft_ahead_back.c ./srcs/camera_moves/ft_right_left.c ./srcs/main.c
+./srcs/camera_moves/ft_ahead_back.c ./srcs/camera_moves/ft_right_left.c ./srcs/check_standart_input.c ./srcs/main.c
 
 OBJ = $(SRCS:.c=.o)
 
