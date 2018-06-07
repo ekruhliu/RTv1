@@ -22,12 +22,14 @@ void	create_shadow(t_pool *pool)
 	while (++i < pool->fig_counter)
 	{
 		intersect_shadow_figures(pool, i);
-		if (pool->sdw_t1 > 0.0001 && pool->sdw_t1 < 1 && pool->sdw_t1 < pool->shadow_t)
+		if (pool->sdw_t1 > 0.0001 && pool->sdw_t1 < 1
+			&& pool->sdw_t1 < pool->shadow_t)
 		{
 			pool->shadow_t = pool->sdw_t1;
 			pool->sdw_figure = i;
 		}
-		if (pool->sdw_t2 > 0.0001 && pool->sdw_t2 < 1 && pool->sdw_t2 < pool->shadow_t)
+		if (pool->sdw_t2 > 0.0001 && pool->sdw_t2 < 1
+			&& pool->sdw_t2 < pool->shadow_t)
 		{
 			pool->shadow_t = pool->sdw_t2;
 			pool->sdw_figure = i;

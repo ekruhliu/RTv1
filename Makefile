@@ -22,7 +22,7 @@ LIBFT = libft/libft.a
 
 SRCS = ./scenes/scene_one.c ./scenes/scene_two.c ./scenes/scene_three.c ./scenes/scene_four.c ./scenes/scene_five.c ./srcs/initialization.c ./srcs/cleaner.c ./srcs/render.c \
 ./srcs/shadows.c ./srcs/lights.c ./srcs/intersect_ray_figures.c ./srcs/colors.c ./srcs/figures/ft_sphere.c ./srcs/figures/ft_cylinder.c ./srcs/figures/ft_cone.c ./srcs/figures/ft_plane.c \
-./srcs/main.c
+./srcs/camera_moves/ft_ahead_back.c ./srcs/camera_moves/ft_right_left.c ./srcs/main.c
 
 OBJ = $(SRCS:.c=.o)
 
@@ -32,6 +32,7 @@ $(NAME): $(OBJ)
 		@ make -C libft/
 		@ gcc -o $(NAME) $(OBJ) $(LIBFT) $(SDL)
 		@ echo "\033[1m\033[32mCompile!\033[0m"
+		@ echo "\033[1;34mChoose scene from \033[1;31m1\033[0m \033[1;34mto \033[1;31m5\033[0m"
 
 %.o: %.c $(HEADER)
 		@ gcc $(FLAGS) -o  $@ $<

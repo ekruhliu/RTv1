@@ -29,7 +29,7 @@ static	void	find_normal(t_pool *pool)
 
 int				render(t_pool *pool)
 {
-	int		i;
+	int	i;
 
 	i = -1;
 	pool->closest_t = INFINITY;

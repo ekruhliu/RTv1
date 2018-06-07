@@ -14,11 +14,11 @@
 
 static	void	init_light(t_pool *pool)
 {
-	pool->light = malloc(sizeof(t_light) * 1);
-	pool->light[0].intensity = 0.6;
-	pool->light[0].pos.x = 6;
-	pool->light[0].pos.y = 0;
-	pool->light[0].pos.z = -6;
+	LIGHT = malloc(sizeof(t_light) * 1);
+	LIGHT[0].intensity = 0.6;
+	LIGHT[0].pos.x = 6;
+	LIGHT[0].pos.y = 0;
+	LIGHT[0].pos.z = -6;
 	pool->amb_light = 0.1;
 	pool->light_int = pool->amb_light;
 	pool->light_counter = 1;
@@ -26,37 +26,36 @@ static	void	init_light(t_pool *pool)
 
 static	void	part_one(t_pool *pool)
 {
-	pool->figure[0].type = 4;
-	pool->figure[0].pos.x = 0;
-	pool->figure[0].pos.y = 0;
-	pool->figure[0].pos.z = 0;
-	pool->figure[0].green = 0;
-	pool->figure[0].blue = 130;
-	pool->figure[0].red = 190;
-	pool->figure[0].dir.x = 0;
-	pool->figure[0].dir.y = 1;
-	pool->figure[0].dir.z = 0;
-	pool->figure[0].radius = 1;
-	pool->figure[0].tarnish = 1000;
-	pool->figure[0].angle = 70;
+	FIGURE[0].type = 4;
+	FIGURE[0].pos.x = 0;
+	FIGURE[0].pos.y = 0;
+	FIGURE[0].pos.z = 0;
+	FIGURE[0].green = 0;
+	FIGURE[0].blue = 130;
+	FIGURE[0].red = 190;
+	FIGURE[0].dir.x = 0;
+	FIGURE[0].dir.y = 1;
+	FIGURE[0].dir.z = 0;
+	FIGURE[0].radius = 1;
+	FIGURE[0].tarnish = 1000;
+	FIGURE[0].angle = 70;
 }
 
-void	scene_three(t_pool *pool)
+void			scene_three(t_pool *pool)
 {
 	init_light(pool);
-	pool->figure = malloc(sizeof(t_figure) * 2);
+	FIGURE = malloc(sizeof(t_figure) * 2);
 	pool->fig_counter = 2;
 	part_one(pool);
-	pool->figure[1].type = 3;
-	pool->figure[1].pos.x = 0;
-	pool->figure[1].pos.y = -3;
-	pool->figure[1].pos.z = 0;
-	pool->figure[1].dir.x = 0;
-	pool->figure[1].dir.y = -3;
-	pool->figure[1].dir.z = 0;
-	pool->figure[1].red = 0;
-	pool->figure[1].blue = 0;
-	pool->figure[1].green = 150;
-	pool->figure[1].tarnish = 100;
+	FIGURE[1].type = 3;
+	FIGURE[1].pos.x = 0;
+	FIGURE[1].pos.y = -3;
+	FIGURE[1].pos.z = 0;
+	FIGURE[1].dir.x = 0;
+	FIGURE[1].dir.y = -3;
+	FIGURE[1].dir.z = 0;
+	FIGURE[1].red = 0;
+	FIGURE[1].blue = 0;
+	FIGURE[1].green = 150;
+	FIGURE[1].tarnish = 100;
 }
-

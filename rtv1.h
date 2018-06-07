@@ -23,6 +23,18 @@
 # define DEC_H 1000 / 2
 # define X pool->x
 # define Y pool->y
+# define FIGURE pool->figure
+# define NORMAL pool->normal
+# define COORD pool->coord
+# define RAD pool->cone_radiana
+# define VAR pool->var
+# define CLS_F pool->cls_figure
+# define LIGHT pool->light
+# define LIGHT_INT pool->light_int
+# define RED pool->figure[pool->cls_figure].red
+# define GREEN pool->figure[pool->cls_figure].green
+# define BLUE pool->figure[pool->cls_figure].blue
+# define COLORS (pool->red << 16) + (pool->green << 8) + pool->blue
 # define WIN ST_SDL->win
 # define RENDER_FLAG pool->render_flags
 # define RENDER ST_SDL->rend
@@ -37,15 +49,27 @@
 # define SCREEN_TEX pool->sdl->screen_tex
 # define TEX_FMR_SRF SDL_CreateTextureFromSurface
 # define REND_CPY SDL_RenderCopy
-# define RADIUS pool->figure[i].radius
+# define RADIUS FIGURE[i].radius
 # define DOT(x1, x2) ((x1.x * x2.x) + (x1.y * x2.y) + (x1.z * x2.z))
-# define X1 (sqrt(pow(pool->normal.x, 2) + pow(pool->normal.y, 2) + pow(pool->normal.z, 2)))
+# define X1 (sqrt(pow(NORMAL.x, 2) + pow(NORMAL.y, 2) + pow(NORMAL.z, 2)))
 # define X2 (sqrt(pow(pool->l.x, 2) + pow(pool->l.y, 2) + pow(pool->l.z, 2)))
 # define X3 (sqrt(pow(pool->r.x, 2) + pow(pool->r.y, 2) + pow(pool->r.z, 2)))
 # define X4 (sqrt(pow(pool->v.x, 2) + pow(pool->v.y, 2) + pow(pool->v.z, 2)))
 # define X5 (sqrt(pow(copy_2.x, 2) + pow(copy_2.y, 2) + pow(copy_2.z, 2)))
-# define X7 (sqrt(pow(pool->figure[i].dir.x, 2) + pow(pool->figure[i].dir.y, 2) + pow(pool->figure[i].dir.z, 2)))
-# define X8 (sqrt(pow(pool->var->x4.x, 2) + pow(pool->var->x4.y, 2) + pow(pool->var->x4.z, 2)))
+# define X6 (sqrt(pow(NORMAL.x, 2) + pow(NORMAL.y, 2) + pow(NORMAL.z, 2)))
+# define X8 (sqrt(pow(VAR->x4.x, 2) + pow(VAR->x4.y, 2) + pow(VAR->x4.z, 2)))
+# define X9 DOT(cyl, FIGURE->dir)
+# define X10 DOT(COORD, FIGURE->dir)
+# define X11 DOT(cone, FIGURE[i].dir)
+# define X12 DOT(COORD, FIGURE[i].dir)
+# define X13 pow(FIGURE[CLS_F].dir.x, 2)
+# define X14 pow(FIGURE[CLS_F].dir.y, 2)
+# define X15 pow(FIGURE[CLS_F].dir.z, 2)
+# define X16 (VAR->x2.x * FIGURE[CLS_F].dir.x)
+# define X17 (VAR->x2.y * FIGURE[CLS_F].dir.y)
+# define X18 (VAR->x2.z * FIGURE[CLS_F].dir.z)
+# define X19 (LIGHT[i].intensity * n_dot_l) / (X1 * X2)
+# define X20 LIGHT[i].intensity * pow(r_dot_v / (X3 * X4), FIGURE->tarnish)
 
 typedef	struct		s_vector
 {
@@ -109,7 +133,7 @@ typedef	struct		s_pool
 	double			closest_t;
 	double			shadow_t;
 	int				sdw_figure;
-	int 			cls_figure;
+	int				cls_figure;
 	t_vector		coord;
 	double			light_int;
 	double			t1;
@@ -126,6 +150,9 @@ typedef	struct		s_pool
 	double			cone_radiana;
 	double			amb_light;
 	t_variable		*var;
+	unsigned int	red;
+	unsigned int	green;
+	unsigned int	blue;
 }					t_pool;
 
 void				initialization(t_pool *pool);
@@ -134,6 +161,8 @@ int					render(t_pool *pool);
 void				scene_one(t_pool *pool);
 void				scene_two(t_pool *pool);
 void				scene_three(t_pool *pool);
+void				scene_four(t_pool *pool);
+void				scene_five(t_pool *pool);
 void				intersect_shadow_sphere(t_pool *pool, int i);
 void				create_shadow(t_pool *pool);
 void				create_light(t_pool *pool);
@@ -152,5 +181,9 @@ void				find_normal_sphere(t_pool *pool);
 void				find_normal_cylinder(t_pool *pool);
 void				find_normal_plane(t_pool *pool);
 void				find_normal_cone(t_pool *pool);
+void				go_ahead(t_pool *pool);
+void				go_back(t_pool *pool);
+void				go_right(t_pool *pool);
+void				go_left(t_pool *pool);
 
 #endif

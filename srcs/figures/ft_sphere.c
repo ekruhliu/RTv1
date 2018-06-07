@@ -19,12 +19,12 @@ void	intersect_ray_sphere(t_pool *pool, int i)
 	double	x3;
 	double	discriminant;
 
-	pool->coord.x = pool->cam.x - pool->figure[i].pos.x;
-	pool->coord.y = pool->cam.y - pool->figure[i].pos.y;
-	pool->coord.z = pool->cam.z - pool->figure[i].pos.z;
+	COORD.x = pool->cam.x - pool->figure[i].pos.x;
+	COORD.y = pool->cam.y - pool->figure[i].pos.y;
+	COORD.z = pool->cam.z - pool->figure[i].pos.z;
 	x1 = DOT(pool->ray, pool->ray);
-	x2 = 2 * DOT(pool->coord, pool->ray);
-	x3 = DOT(pool->coord, pool->coord) - (RADIUS * RADIUS);
+	x2 = 2 * DOT(COORD, pool->ray);
+	x3 = DOT(COORD, COORD) - (RADIUS * RADIUS);
 	discriminant = (x2 * x2) - (4 * x1 * x3);
 	if (discriminant < 0)
 	{
@@ -42,12 +42,12 @@ void	intersect_shadow_sphere(t_pool *pool, int i)
 	double	x3;
 	double	discriminant;
 
-	pool->coord.x = pool->p.x - pool->figure[i].pos.x;
-	pool->coord.y = pool->p.y - pool->figure[i].pos.y;
-	pool->coord.z = pool->p.z - pool->figure[i].pos.z;
+	COORD.x = pool->p.x - pool->figure[i].pos.x;
+	COORD.y = pool->p.y - pool->figure[i].pos.y;
+	COORD.z = pool->p.z - pool->figure[i].pos.z;
 	x1 = DOT(pool->l, pool->l);
-	x2 = 2 * DOT(pool->coord, pool->l);
-	x3 = DOT(pool->coord, pool->coord) - (RADIUS * RADIUS);
+	x2 = 2 * DOT(COORD, pool->l);
+	x3 = DOT(COORD, COORD) - (RADIUS * RADIUS);
 	discriminant = (x2 * x2) - (4 * x1 * x3);
 	if (discriminant < 0)
 	{
@@ -60,10 +60,10 @@ void	intersect_shadow_sphere(t_pool *pool, int i)
 
 void	find_normal_sphere(t_pool *pool)
 {
-	pool->normal.x = pool->p.x - pool->figure[pool->cls_figure].pos.x;
-	pool->normal.y = pool->p.y - pool->figure[pool->cls_figure].pos.y;
-	pool->normal.z = pool->p.z - pool->figure[pool->cls_figure].pos.z;
-	pool->normal.x /= (sqrt(pow(pool->normal.x, 2) + pow(pool->normal.y, 2) + pow(pool->normal.z, 2)));
-	pool->normal.y /= (sqrt(pow(pool->normal.x, 2) + pow(pool->normal.y, 2) + pow(pool->normal.z, 2)));
-	pool->normal.z /= (sqrt(pow(pool->normal.x, 2) + pow(pool->normal.y, 2) + pow(pool->normal.z, 2)));
+	NORMAL.x = pool->p.x - pool->figure[CLS_F].pos.x;
+	NORMAL.y = pool->p.y - pool->figure[CLS_F].pos.y;
+	NORMAL.z = pool->p.z - pool->figure[CLS_F].pos.z;
+	NORMAL.x /= X6;
+	NORMAL.y /= X6;
+	NORMAL.z /= X6;
 }

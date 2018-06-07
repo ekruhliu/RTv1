@@ -14,22 +14,20 @@
 
 void	intersect_ray_cone(t_pool *pool, int i)
 {
-	double	x1;
-	double	x2;
-	double	x3;
-	double	discriminant;
+	double		x1;
+	double		x2;
+	double		x3;
+	double		discriminant;
 	t_vector	cone;
 
-	cone.x = pool->ray.x;
-	cone.y = pool->ray.y;
-	cone.z = pool->ray.z;
-	pool->coord.x = pool->cam.x - pool->figure[i].pos.x;
-	pool->coord.y = pool->cam.y - pool->figure[i].pos.y;
-	pool->coord.z = pool->cam.z - pool->figure[i].pos.z;
-	pool->cone_radiana = tan((pool->figure[i].angle / 2) * 3.14 / 180);
-	x1 = DOT(cone, cone) - (1 + pow(pool->cone_radiana, 2)) * pow(DOT(cone, pool->figure[i].dir), 2);
-	x2 = 2 * (DOT(cone, pool->coord) - (1 + pow(pool->cone_radiana, 2)) * (DOT(cone, pool->figure[i].dir) * (DOT(pool->coord, pool->figure[i].dir))));
-	x3 = DOT(pool->coord, pool->coord) - (1 + pow(pool->cone_radiana, 2)) * pow(DOT(pool->coord, pool->figure[i].dir), 2);
+	cone = pool->ray;
+	COORD.x = pool->cam.x - FIGURE[i].pos.x;
+	COORD.y = pool->cam.y - FIGURE[i].pos.y;
+	COORD.z = pool->cam.z - FIGURE[i].pos.z;
+	RAD = tan((FIGURE[i].angle / 2) * 3.14 / 180);
+	x1 = DOT(cone, cone) - (1 + pow(RAD, 2)) * pow(X11, 2);
+	x2 = 2 * (DOT(cone, COORD) - (1 + pow(RAD, 2)) * (X11 * (X12)));
+	x3 = DOT(COORD, COORD) - (1 + pow(RAD, 2)) * pow(X12, 2);
 	discriminant = pow(x2, 2) - (4 * x1 * x3);
 	if (discriminant < 0)
 	{
@@ -42,22 +40,20 @@ void	intersect_ray_cone(t_pool *pool, int i)
 
 void	intersect_shadow_cone(t_pool *pool, int i)
 {
-	double	x1;
-	double	x2;
-	double	x3;
-	double	discriminant;
+	double		x1;
+	double		x2;
+	double		x3;
+	double		discriminant;
 	t_vector	cone;
 
-	cone.x = pool->l.x;
-	cone.y = pool->l.y;
-	cone.z = pool->l.z;
-	pool->coord.x = pool->p.x - pool->figure[i].pos.x;
-	pool->coord.y = pool->p.y - pool->figure[i].pos.y;
-	pool->coord.z = pool->p.z - pool->figure[i].pos.z;
-	pool->cone_radiana = tan((pool->figure[i].angle / 2) * 3.14 / 180);
-	x1 = DOT(cone, cone) - (1 + pow(pool->cone_radiana, 2)) * pow(DOT(cone, pool->figure[i].dir), 2);
-	x2 = 2 * (DOT(cone, pool->coord) - (1 + pow(pool->cone_radiana, 2)) * (DOT(cone, pool->figure[i].dir) * (DOT(pool->coord, pool->figure[i].dir))));
-	x3 = DOT(pool->coord, pool->coord) - (1 + pow(pool->cone_radiana, 2)) * pow(DOT(pool->coord, pool->figure[i].dir), 2);
+	cone = pool->l;
+	COORD.x = pool->p.x - FIGURE[i].pos.x;
+	COORD.y = pool->p.y - FIGURE[i].pos.y;
+	COORD.z = pool->p.z - FIGURE[i].pos.z;
+	RAD = tan((FIGURE[i].angle / 2) * 3.14 / 180);
+	x1 = DOT(cone, cone) - (1 + pow(RAD, 2)) * pow(X11, 2);
+	x2 = 2 * (DOT(cone, COORD) - (1 + pow(RAD, 2)) * (X11 * (X12)));
+	x3 = DOT(COORD, COORD) - (1 + pow(RAD, 2)) * pow(X12, 2);
 	discriminant = pow(x2, 2) - (4 * x1 * x3);
 	if (discriminant < 0)
 	{
@@ -70,29 +66,28 @@ void	intersect_shadow_cone(t_pool *pool, int i)
 
 void	find_normal_cone(t_pool *pool)
 {
-	pool->var = malloc(sizeof(t_variable));
-
-	pool->var->x2.x = pool->p.x - pool->figure[pool->cls_figure].pos.x;
-	pool->var->x2.y = pool->p.y - pool->figure[pool->cls_figure].pos.y;
-	pool->var->x2.z = pool->p.z - pool->figure[pool->cls_figure].pos.z;
-	pool->var->x6 = (sqrt(pow(pool->var->x2.x, 2) + pow(pool->var->x2.y, 2) + pow(pool->var->x2.z, 2)));
-	pool->var->x7 = (sqrt(pow(pool->figure[pool->cls_figure].dir.x, 2) + pow(pool->figure[pool->cls_figure].dir.y, 2) + pow(pool->figure[pool->cls_figure].dir.z, 2)));
-	pool->var->x8 = ((pool->var->x2.x * pool->figure[pool->cls_figure].dir.x) + (pool->var->x2.y * pool->figure[pool->cls_figure].dir.y) + (pool->var->x2.z * pool->figure[pool->cls_figure].dir.z));
-	pool->var->x1 = (pool->var->x8 / (pool->var->x6 * pool->var->x7));
-	pool->var->x3.x = pool->var->x1 * pool->figure[pool->cls_figure].dir.x;
-	pool->var->x3.y = pool->var->x1 * pool->figure[pool->cls_figure].dir.y;
-	pool->var->x3.z = pool->var->x1 * pool->figure[pool->cls_figure].dir.z;
-	pool->var->x4.x = pool->var->x2.x - pool->var->x3.x;
-	pool->var->x4.y = pool->var->x2.y - pool->var->x3.y;
-	pool->var->x4.z = pool->var->x2.z - pool->var->x3.z;
-	pool->var->x5.x = (pool->var->x2.y * pool->var->x4.z) - (pool->var->x2.z * pool->var->x4.y);
-	pool->var->x5.y = (pool->var->x2.x * pool->var->x4.z) - (pool->var->x2.z * pool->var->x4.x);
-	pool->var->x5.z = (pool->var->x2.x * pool->var->x4.y) - (pool->var->x2.y * pool->var->x4.x);
-	pool->var->x4.x = (pool->var->x5.y * pool->var->x2.z) - (pool->var->x5.z * pool->var->x2.y);
-	pool->var->x4.y = (pool->var->x5.z * pool->var->x2.x) - (pool->var->x5.x * pool->var->x2.z);
-	pool->var->x4.z = (pool->var->x5.x * pool->var->x2.y) - (pool->var->x5.y * pool->var->x2.x);
-	pool->normal.x = pool->var->x4.x / (X8);
-	pool->normal.y = pool->var->x4.y / (X8);
-	pool->normal.z = pool->var->x4.z / (X8);
-	free(pool->var);
+	VAR = malloc(sizeof(t_variable));
+	VAR->x2.x = pool->p.x - FIGURE[CLS_F].pos.x;
+	VAR->x2.y = pool->p.y - FIGURE[CLS_F].pos.y;
+	VAR->x2.z = pool->p.z - FIGURE[CLS_F].pos.z;
+	VAR->x6 = (sqrt(pow(VAR->x2.x, 2) + pow(VAR->x2.y, 2) + pow(VAR->x2.z, 2)));
+	VAR->x7 = (sqrt(X13 + X14 + X15));
+	VAR->x8 = (X16 + X17 + X18);
+	VAR->x1 = (VAR->x8 / (VAR->x6 * VAR->x7));
+	VAR->x3.x = VAR->x1 * FIGURE[CLS_F].dir.x;
+	VAR->x3.y = VAR->x1 * FIGURE[CLS_F].dir.y;
+	VAR->x3.z = VAR->x1 * FIGURE[CLS_F].dir.z;
+	VAR->x4.x = VAR->x2.x - VAR->x3.x;
+	VAR->x4.y = VAR->x2.y - VAR->x3.y;
+	VAR->x4.z = VAR->x2.z - VAR->x3.z;
+	VAR->x5.x = (VAR->x2.y * VAR->x4.z) - (VAR->x2.z * VAR->x4.y);
+	VAR->x5.y = (VAR->x2.x * VAR->x4.z) - (VAR->x2.z * VAR->x4.x);
+	VAR->x5.z = (VAR->x2.x * VAR->x4.y) - (VAR->x2.y * VAR->x4.x);
+	VAR->x4.x = (VAR->x5.y * VAR->x2.z) - (VAR->x5.z * VAR->x2.y);
+	VAR->x4.y = (VAR->x5.z * VAR->x2.x) - (VAR->x5.x * VAR->x2.z);
+	VAR->x4.z = (VAR->x5.x * VAR->x2.y) - (VAR->x5.y * VAR->x2.x);
+	NORMAL.x = VAR->x4.x / (X8);
+	NORMAL.y = VAR->x4.y / (X8);
+	NORMAL.z = VAR->x4.z / (X8);
+	free(VAR);
 }

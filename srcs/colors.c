@@ -14,24 +14,11 @@
 
 int		ret_color(t_pool *pool)
 {
-	unsigned int r;
-	unsigned int g;
-	unsigned int b;
-
-	r = 0;
-	g = 0;
-	b = 0;
-	if ((pool->figure[pool->cls_figure].red * pool->light_int) > 255)
-		r = 255;
-	else
-		r = pool->figure[pool->cls_figure].red * pool->light_int;
-	if ((pool->figure[pool->cls_figure].green * pool->light_int) > 255)
-		g = 255;
-	else
-		g = pool->figure[pool->cls_figure].green * pool->light_int;
-	if ((pool->figure[pool->cls_figure].blue * pool->light_int) > 255)
-		b = 255;
-	else
-		b = pool->figure[pool->cls_figure].blue * pool->light_int;
-	return ((r << 16) + (g << 8) + b);
+	RED * pool->light_int > 255 ? pool->red = 255 : 0;
+	RED * pool->light_int <= 255 ? pool->red = RED * pool->light_int : 0;
+	GREEN * pool->light_int > 255 ? pool->green = 255 : 0;
+	GREEN * pool->light_int <= 255 ? pool->green = GREEN * pool->light_int : 0;
+	BLUE * pool->light_int > 255 ? pool->blue = 255 : 0;
+	BLUE * pool->light_int <= 255 ? pool->blue = BLUE * pool->light_int : 0;
+	return (COLORS);
 }

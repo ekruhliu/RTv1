@@ -15,10 +15,10 @@
 static	void	amb_light(t_pool *pool)
 {
 	if (pool->amb_light > 0.0)
-		pool->light_int = pool->amb_light;
+		LIGHT_INT = pool->amb_light;
 }
 
-static	void	find_r(t_pool *pool, double	n_dot_l)
+static	void	find_r(t_pool *pool, double n_dot_l)
 {
 	pool->r.x = 2 * pool->normal.x * n_dot_l - pool->l.x;
 	pool->r.y = 2 * pool->normal.y * n_dot_l - pool->l.y;
@@ -28,43 +28,44 @@ static	void	find_r(t_pool *pool, double	n_dot_l)
 static	void	find_v(t_pool *pool)
 {
 	pool->v = pool->ray;
-	// ЭТО СОКРАТИТ КОД ПИЗДЕЦ КАК !!!!!!!!!!!!!
 	pool->v.x *= -1;
 	pool->v.y *= -1;
 	pool->v.z *= -1;
+	amb_light(pool);
 }
 
-void	create_light(t_pool *pool)
+static	void	find_l(t_pool *pool, int i)
+{
+	pool->l.x = LIGHT[i].pos.x - pool->p.x;
+	pool->l.y = LIGHT[i].pos.y - pool->p.y;
+	pool->l.z = LIGHT[i].pos.z - pool->p.z;
+}
+
+void			create_light(t_pool *pool)
 {
 	double	n_dot_l;
 	double	r_dot_v;
 	int		i;
 
-	pool->light_int = 0.0;
+	LIGHT_INT = 0.0;
 	i = -1;
 	find_v(pool);
-	amb_light(pool);
 	while (++i < pool->light_counter)
 	{
-		pool->l.x = pool->light[i].pos.x - pool->p.x;
-		pool->l.y = pool->light[i].pos.y - pool->p.y;
-		pool->l.z = pool->light[i].pos.z - pool->p.z;
+		find_l(pool, i);
 		create_shadow(pool);
 		if (pool->sdw_figure != -1)
 			continue ;
 		n_dot_l = DOT(pool->normal, pool->l);
-		if (n_dot_l > 0)
-			pool->light_int += (pool->light[i].intensity * n_dot_l) / (X1 * X2);
-		if (pool->figure[pool->cls_figure].type != 3)
+		(n_dot_l > 0 ? LIGHT_INT += X19 : 0);
+		if (FIGURE[pool->cls_figure].type != 3)
 		{
-			if (pool->figure[pool->cls_figure].tarnish != -1)
+			if (FIGURE[pool->cls_figure].tarnish != -1)
 			{
 				find_r(pool, n_dot_l);
 				r_dot_v = DOT(pool->r, pool->v);
-				if (r_dot_v > 0)
-					pool->light_int += pool->light[i].intensity * pow(r_dot_v / (X3 * X4), pool->figure->tarnish);
+				(r_dot_v > 0 ? LIGHT_INT += X20 : 0);
 			}
 		}
-
 	}
 }
