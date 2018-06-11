@@ -23,7 +23,7 @@ static	void	init_light(t_pool *pool)
 	LIGHT[1].pos.x = -6;
 	LIGHT[1].pos.y = 0;
 	LIGHT[1].pos.z = -6;
-	pool->amb_light = 0.2;
+	pool->amb_light = 0.0;
 	pool->light_int = pool->amb_light;
 	pool->light_counter = 2;
 }

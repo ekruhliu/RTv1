@@ -12,6 +12,13 @@
 
 #include "../rtv1.h"
 
+static	void	add_position(t_pool *pool)
+{
+	ft_putstr("\033[1;34mAdd figure position in format: X Y Z\n\e[m");
+	ft_putstr("\033[1;34mOr press ENTER to add default position\n\e[m");
+	check_standart_input(pool);
+}
+
 static	void	part_one(t_pool *pool, char *argv)
 {
 	ST_SDL = malloc(sizeof(t_sdl));
@@ -20,14 +27,18 @@ static	void	part_one(t_pool *pool, char *argv)
 	if (ft_atoi(argv) == 1)
 	{
 		scene_one(pool);
-		ft_putstr("\033[1;34mAdd figure position in format: X Y Z\n\e[m");
-		ft_putstr("\033[1;34mOr press ENTER to add default position\n\e[m");
-		check_standart_input(pool);
+		add_position(pool);
 	}
 	if (ft_atoi(argv) == 2)
+	{
 		scene_two(pool);
+		add_position(pool);
+	}
 	if (ft_atoi(argv) == 3)
+	{
 		scene_three(pool);
+		add_position(pool);
+	}
 	if (ft_atoi(argv) == 4)
 		scene_four(pool);
 	if (ft_atoi(argv) == 5)
