@@ -68,22 +68,22 @@ void	intersect_shadow_cylinder(t_pool *pool, int i)
 
 void	find_normal_cylinder(t_pool *pool)
 {
-	double		x_1;
-	t_vector	x_2;
-	t_vector	x_3;
-	t_vector	x_4;
+	double		x1;
+	t_vector	x2;
+	t_vector	x3;
+	t_vector	x4;
 
-	x_2.x = pool->p.x - FIGURE[CLS_F].pos.x;
-	x_2.y = pool->p.y - FIGURE[CLS_F].pos.y;
-	x_2.z = pool->p.z - FIGURE[CLS_F].pos.z;
-	x_1 = DOT(FIGURE[CLS_F].dir, x_2);
-	x_3.x = x_1 * FIGURE[CLS_F].dir.x;
-	x_3.y = x_1 * FIGURE[CLS_F].dir.y;
-	x_3.z = x_1 * FIGURE[CLS_F].dir.z;
-	x_4.x = x_2.x - x_3.x;
-	x_4.y = x_2.y - x_3.y;
-	x_4.z = x_2.z - x_3.z;
-	NORMAL.x = x_4.x / FIGURE[CLS_F].radius;
-	NORMAL.y = x_4.y / FIGURE[CLS_F].radius;
-	NORMAL.z = x_4.z / FIGURE[CLS_F].radius;
+	x2.x = pool->p.x - FIGURE[CLS_F].pos.x;
+	x2.y = pool->p.y - FIGURE[CLS_F].pos.y;
+	x2.z = pool->p.z - FIGURE[CLS_F].pos.z;
+	x1 = DOT(FIGURE[CLS_F].dir, x2);
+	x3.x = x1 * FIGURE[CLS_F].dir.x;
+	x3.y = x1 * FIGURE[CLS_F].dir.y;
+	x3.z = x1 * FIGURE[CLS_F].dir.z;
+	x4.x = x2.x - x3.x;
+	x4.y = x2.y - x3.y;
+	x4.z = x2.z - x3.z;
+	NORMAL.x = x4.x / FIGURE[CLS_F].radius;
+	NORMAL.y = x4.y / FIGURE[CLS_F].radius;
+	NORMAL.z = x4.z / FIGURE[CLS_F].radius;
 }

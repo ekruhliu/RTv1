@@ -1,27 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cleaner.c                                          :+:      :+:    :+:   */
+/*   ft_up_down.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ekruhliu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/05/16 13:41:37 by ekruhliu          #+#    #+#             */
-/*   Updated: 2018/05/16 13:41:38 by ekruhliu         ###   ########.fr       */
+/*   Created: 2018/06/11 14:39:36 by ekruhliu          #+#    #+#             */
+/*   Updated: 2018/06/11 14:39:38 by ekruhliu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../rtv1.h"
+#include "../../rtv1.h"
 
-void	cleaner(t_pool *pool)
+void	go_up(t_pool *pool)
 {
-	SDL_RenderClear(ST_SDL->rend);
-	SDL_DestroyWindow(WIN);
-	SDL_DestroyRenderer(ST_SDL->rend);
-	SDL_DestroyTexture(SCREEN_TEX);
-	SDL_Quit();
-	free(ST_SDL->scene);
-	free(pool->sdl);
-	free(pool->figure);
-	free(pool->light);
-	free(pool);
+	pool->cam.y += 0.5;
+}
+
+void	go_down(t_pool *pool)
+{
+	pool->cam.y -= 0.5;
 }

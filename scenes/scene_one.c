@@ -16,9 +16,9 @@ static	void	init_light(t_pool *pool)
 {
 	LIGHT = malloc(sizeof(t_light) * 1);
 	LIGHT[0].intensity = 0.6;
-	LIGHT[0].pos.x = 6;
-	LIGHT[0].pos.y = 0;
-	LIGHT[0].pos.z = -6;
+	LIGHT[0].pos.x = 3;
+	LIGHT[0].pos.y = 3;
+	LIGHT[0].pos.z = -20;
 	pool->amb_light = 0.2;
 	pool->light_int = pool->amb_light;
 	pool->light_counter = 1;
@@ -36,6 +36,6 @@ void			scene_one(t_pool *pool)
 	FIGURE[0].green = 0;
 	FIGURE[0].blue = 0;
 	FIGURE[0].red = 255;
-	FIGURE[0].tarnish = 100;
+	FIGURE[0].tarnish = 10;
 	FIGURE[0].type = 1;
 }

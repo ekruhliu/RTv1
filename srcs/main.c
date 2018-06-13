@@ -85,6 +85,10 @@ static	void	part_three(t_pool *pool)
 	(KEY_STATE[SDL_SCANCODE_S]) ? go_back(pool) : 0;
 	(KEY_STATE[SDL_SCANCODE_D]) ? go_right(pool) : 0;
 	(KEY_STATE[SDL_SCANCODE_A]) ? go_left(pool) : 0;
+	(KEY_STATE[SDL_SCANCODE_D]) ? go_right(pool) : 0;
+	(KEY_STATE[SDL_SCANCODE_A]) ? go_left(pool) : 0;
+	(KEY_STATE[SDL_SCANCODE_UP]) ? go_up(pool) : 0;
+	(KEY_STATE[SDL_SCANCODE_DOWN]) ? go_down(pool) : 0;
 }
 
 int				main(int argc, char **argv)
